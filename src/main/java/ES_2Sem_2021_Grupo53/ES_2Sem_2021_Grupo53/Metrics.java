@@ -1,6 +1,9 @@
 package ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53;
 
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileReader;
+import java.io.BufferedReader;
 
 //Metric Extraction File
 public class Metrics {
@@ -13,24 +16,48 @@ public class Metrics {
 	
 	private boolean getMetrics(String Path) {
 		
+		try {
+			
+			BufferedReader file = new BufferedReader(new FileReader("C:\\Users\\anton\\eclipse-workspace\\ES\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy\\DummyClass2.java"));
+			
+			String line;
+			int numberOfLinesClass = 0; // Increment every new line
+			ArrayList<Integer> methodsCyclomatic = new ArrayList<Integer>();
+			while((line=file.readLine()) != null) {
+				
+				if(!line.trim().isEmpty() && !line.contains("//") && !line.contains("package") && !line.contains("import")) { // Checks if it is a valid line i.e. is not an import or package statement and is not a comment or empty line
+					
+					numberOfLinesClass++;
+						
+					//If new Method
+					int numberOfLinesMethod = 0;//Increment every new line till end of method
+					int numberOfLoops = 0;//Increment every time there is a for or while loop in the code
+					setNumberOfMethods(getNumberOfMethods() + 1);
+					methodsCyclomatic.add(numberOfLoops);
+					//Print method info to xlsx file
+				    	
+				}
+			}
+			System.out.println(numberOfLinesClass);
+			int classComplexity = 0; //Set to max of array of methodsCyclomatic 
+			setNumberOfClasses(getNumberOfClasses() + 1);
+			setNumberOfLines(getNumberOfLines() + numberOfLinesClass);
+			//Print class info to xlsx file
+			
+			
+			file.close();
+
+		}catch(Exception e){
+		
+			e.printStackTrace();
+		
+		}
 	//1-Open files from path
 		//If path is empty throw exception(Return false) failure
 	//2-Loop to parse each packages
 		setNumberOfPackets(getNumberOfPackets() + 1);
 	//3-Loop to parse each file in the packages
-		int numberOfLinesClass = 0; // Increment every new line
-		ArrayList<Integer> methodsCyclomatic = new ArrayList<Integer>();
-		//If new Method
-			int numberOfLinesMethod = 0;//Increment every new line till end of method
-			int numberOfLoops = 0;//Increment every time there is a for or while loop in the code
-			setNumberOfMethods(getNumberOfMethods() + 1);
-			methodsCyclomatic.add(numberOfLoops);
-			//Print method info to xlsx file
-		int classComplexity = 0; //Set to max of array of methodsCyclomatic 
-		setNumberOfClasses(getNumberOfClasses() + 1);
-		setNumberOfLines(getNumberOfLines() + numberOfLinesClass);
-		//Print class info to x
-		return true; // succes
+		return true;
 	}
 		
 	public int getNumberOfPackets() {
