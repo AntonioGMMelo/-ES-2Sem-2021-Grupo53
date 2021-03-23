@@ -5,4 +5,3 @@
 83597-Maria João Loureiro de Sousa Viana Dias
 
 Apache POI documentation: https://poi.apache.org/apidocs/5.0/index.html
-Java Parser documentation: https://appdoc.app/artifact/org.jboss.forge.addon/parser-java-impl/3.6.0.Alpha1/help-doc.html

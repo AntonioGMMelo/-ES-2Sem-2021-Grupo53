@@ -45,13 +45,6 @@
 			<artifactId>org-netbeans-modules-javafx2-scenebuilder</artifactId>
 			<version>RELEASE123</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.jboss.forge.addon/parser-java -->
-		<dependency>
-			<groupId>org.jboss.forge.addon</groupId>
-			<artifactId>parser-java</artifactId>
-			<version>3.9.8.Final</version>
-		</dependency>
-
 	</dependencies>
 
 	<build>

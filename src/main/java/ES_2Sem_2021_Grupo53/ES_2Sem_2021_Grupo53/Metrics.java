@@ -22,6 +22,8 @@ public class Metrics {
 			
 			String line;
 			int numberOfLinesClass = 0; // Increment every new line
+			int numberOfLinesMethod = 0;//Increment every new line till end of method
+			int numberOfLoops = 0;//Increment every time there is a for or while loop in the code
 			ArrayList<Integer> methodsCyclomatic = new ArrayList<Integer>();
 			while((line=file.readLine()) != null) {
 				
@@ -29,13 +31,16 @@ public class Metrics {
 					
 					numberOfLinesClass++;
 						
-					//If new Method
-					int numberOfLinesMethod = 0;//Increment every new line till end of method
-					int numberOfLoops = 0;//Increment every time there is a for or while loop in the code
-					setNumberOfMethods(getNumberOfMethods() + 1);
-					methodsCyclomatic.add(numberOfLoops);
-					//Print method info to xlsx file
-				    	
+					//If new Method we have to add the cyclomatic and num of lines of method to the xlsx file and reset the counters to 0
+						numberOfLinesMethod = 0;
+						numberOfLoops = 0;
+						setNumberOfMethods(getNumberOfMethods() + 1);
+						methodsCyclomatic.add(numberOfLoops);
+						//Print method info to xlsx file
+					numberOfLinesMethod++;
+					// if line has a for or a while 
+						numberOfLoops++;
+					
 				}
 			}
 			System.out.println(numberOfLinesClass);
