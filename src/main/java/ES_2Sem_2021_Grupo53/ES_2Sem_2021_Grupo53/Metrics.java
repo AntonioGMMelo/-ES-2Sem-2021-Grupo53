@@ -25,6 +25,7 @@ public class Metrics {
 			int numberOfLinesMethod = 0;//Increment every new line till end of method
 			int numberOfLoops = 0;//Increment every time there is a for or while loop in the code
 			ArrayList<Integer> methodsCyclomatic = new ArrayList<Integer>();
+			
 			while((line=file.readLine()) != null) {
 				
 				if(!line.trim().isEmpty() && !line.contains("//") && !line.contains("package") && !line.contains("import")) { // Checks if it is a valid line i.e. is not an import or package statement and is not a comment or empty line
