@@ -1,9 +1,13 @@
 package ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53;
 
 import java.util.ArrayList;
+
+import org.junit.Test;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
+
 
 //Metric Extraction File
 public class Metrics {
@@ -12,13 +16,27 @@ public class Metrics {
 	private int numberOfClasses = 0; //Increment every time we enter a new file
 	private int numberOfMethods = 0;//Increment every time we enter a new method
 	private int numberOfLines = 0;//Increment every time we enter a new line
-	public static final String PATH = "./Dummy"; //Replace with user specified path when GUI is operational
 	
-	private boolean getMetrics(String Path) {
+	/**
+	 * A Method that extracts various methods
+	 * 
+	 * Extracts The number of packages and classes and methods and total number of lines in a folder indicated by the user,
+	 * as well as for each class the number of lines, number of methods and the cyclomatic complexity
+	 * (how many loops are in the method with the most loops in that class) of the class furthermore,
+	 * it extracts for each method the number of lines of code and the cyclomatic complexity(number of loops).
+	 * 
+	 * @param Path(Path of the folder to analyse)
+	 * 
+	 * @return for now just an integer
+	 * 
+	 * @throws Exception in case it can't open the file 
+	 */
+	
+	public int getMetrics(String Path) {
 		
 		try {
 			
-			BufferedReader file = new BufferedReader(new FileReader("C:\\Users\\anton\\eclipse-workspace\\ES\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy\\DummyClass2.java"));
+			BufferedReader file = new BufferedReader(new FileReader(Path));
 			
 			String line;
 			int numberOfLinesClass = 0; // Increment every new line
@@ -44,15 +62,15 @@ public class Metrics {
 					
 				}
 			}
-			System.out.println(numberOfLinesClass);
 			int classComplexity = 0; //Set to max of array of methodsCyclomatic 
 			setNumberOfClasses(getNumberOfClasses() + 1);
 			setNumberOfLines(getNumberOfLines() + numberOfLinesClass);
 			//Print class info to xlsx file
 			
-			
 			file.close();
 
+			return numberOfLinesClass;
+			
 		}catch(Exception e){
 		
 			e.printStackTrace();
@@ -63,7 +81,7 @@ public class Metrics {
 	//2-Loop to parse each packages
 		setNumberOfPackets(getNumberOfPackets() + 1);
 	//3-Loop to parse each file in the packages
-		return true;
+		return 0;
 	}
 		
 	public int getNumberOfPackets() {
@@ -119,11 +137,4 @@ public class Metrics {
 	
 	}
 
-
-	//Main Class
-	public static void main( String[] args ){
-		
-		System.out.println(new Metrics().getMetrics(PATH));
-		
-    }
 }
