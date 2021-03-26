@@ -16,7 +16,7 @@ public class Metrics {
 	private int numberOfClasses = 0; //Increment every time we enter a new file
 	private int numberOfMethods = 0;//Increment every time we enter a new method
 	private int numberOfLines = 0;//Increment every time we enter a new line
-	
+
 	/**
 	 * A Method that extracts various methods
 	 * 
@@ -82,6 +82,7 @@ public class Metrics {
 		setNumberOfPackets(getNumberOfPackets() + 1);
 	//3-Loop to parse each file in the packages
 		return 0;
+		
 	}
 		
 	public int getNumberOfPackets() {
