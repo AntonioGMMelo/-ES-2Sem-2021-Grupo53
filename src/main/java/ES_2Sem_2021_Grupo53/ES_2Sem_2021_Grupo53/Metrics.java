@@ -82,6 +82,7 @@ public class Metrics {
 		setNumberOfPackets(getNumberOfPackets() + 1);
 		//3-Loop to parse each file in the packages
 		return 0;
+		
 	}
 
 	public int getNumberOfPackets() {

@@ -8,8 +8,6 @@ import org.junit.*;
 
 public class Main {
 	
-	
-	
 	//Main Class
 	public static void main( String[] args ){
 		
