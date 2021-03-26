@@ -14,7 +14,7 @@ public class Assert {
 		
 		int answer1 = new Metrics().getMetrics(PATH); 
 		int answer2 = new Metrics().getMetrics(PATH2);
-		
+					
 		assertEquals(answer1, 20);
 		assertEquals(answer2, 44);
 		
