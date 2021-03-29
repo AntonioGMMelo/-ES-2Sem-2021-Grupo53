@@ -1,10 +1,9 @@
 package ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53;
 
-import org.junit.runner.JUnitCore;
+
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
-
-import org.junit.*;
+import org.junit.runner.JUnitCore;
 
 public class Main {
 	
