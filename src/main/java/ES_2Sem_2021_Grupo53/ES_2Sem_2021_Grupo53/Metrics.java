@@ -16,7 +16,7 @@ public class Metrics {
 	private int numberOfClasses = 0; //Increment every time we enter a new file
 	private int numberOfMethods = 0;//Increment every time we enter a new method
 	private int numberOfLines = 0;//Increment every time we enter a new line
-	private ArrayList<File> files;
+	private ArrayList<File> files = new ArrayList<File>();
 	
 	/**
 	 * A Method that extracts various methods
@@ -40,6 +40,7 @@ public class Metrics {
 			File fileOrigins = new File(Path);
 			decomposePackages(fileOrigins);
 			ArrayList<File> files = getFiles();
+			
 			for(int i = 0; i < files.size(); i++) {
 				
 				BufferedReader file = new BufferedReader(new FileReader(files.get(i)));
