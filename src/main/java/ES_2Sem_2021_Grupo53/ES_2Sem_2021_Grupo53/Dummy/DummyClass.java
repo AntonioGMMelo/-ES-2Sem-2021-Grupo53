@@ -1,7 +1,7 @@
 package ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Dummy;
 
 //Dummy Class for Testing Complexity (Cyclomatic Complexity) 
-public class DummyClass {
+public class DummyClass{
 
 	//Constant Operation O(1) Complexity
 	private static void noLoop() {
