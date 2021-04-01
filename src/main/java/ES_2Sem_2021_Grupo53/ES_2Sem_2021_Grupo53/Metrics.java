@@ -33,7 +33,7 @@ public class Metrics {
 	 * @throws Exception in case it can't open the file 
 	 */
 	
-	public int[] getMetrics(String Path) {
+	public boolean getMetrics(String Path) {
 		
 		try {
 			
@@ -54,11 +54,7 @@ public class Metrics {
 				int numberOfLoops = 0;//Increment every time there is a for or while loop in the method
 
 				ArrayList<Integer> methodsCyclomatic = new ArrayList<Integer>();
-
-				int[] answers = new int[2];
-				answers[0] = 0;
-				answers[1] = 0;
-
+				
 				while((line = file.readLine()) != null) {
 
 					if(!line.trim().isEmpty() && !line.contains("//") && !line.contains("package") && !line.contains("import")) { // Checks if it is a valid line i.e. is not an import or package statement and is not a comment or empty line
@@ -96,11 +92,6 @@ public class Metrics {
 
 				file.close();
 
-				answers[0] = numberOfLinesClass;
-				answers[1] = numberOfMethodsClass;
-
-				return answers;
-
 			}
 			
 		}catch(Exception e){
@@ -112,8 +103,8 @@ public class Metrics {
 		//If path is empty throw exception(Return false) failure
 	//2-Loop to parse each packages
 	//3-Loop to parse each file in the packages
-		int [] def = new int[2];
-		return def;
+		
+		return true;
 	}
 	
 	/**
@@ -182,27 +173,35 @@ public class Metrics {
 		
 	}
 	
-public void decomposePackages(File path) {
-		
-	setNumberOfPackages(1);//1 or 0 depends on whether we count the original package 
-	
-	for (File fileEntry : path.listFiles()) {
-	   
-		if (fileEntry.isDirectory()) {
-	   	
-	    	decomposePackages(fileEntry);
-	    	
-	    	setNumberOfPackages(getNumberOfPackages() + 1);
-	    	
-	    } else {
-	
-	    	getFiles().add(fileEntry);
-	    	
-	    }
-	 
+	/**
+	 * Takes the path and counts the number of packages and puts every file in an Array 
+	 * 
+	 * This method counts every package in the given path and puts every file(class) in an array of 
+	 * files for metric extraction
+	 * 
+	 * @param path (Sting)
+	 */
+	public void decomposePackages(File path) {
+
+		setNumberOfPackages(1);//1 or 0 depends on whether we count the original package 
+
+		for (File fileEntry : path.listFiles()) {
+
+			if (fileEntry.isDirectory()) {
+
+				decomposePackages(fileEntry);
+
+				setNumberOfPackages(getNumberOfPackages() + 1);
+
+			} else {
+
+				getFiles().add(fileEntry);
+
+			}
+
+		}
+
 	}
-	
-}
 		
 	
 		
