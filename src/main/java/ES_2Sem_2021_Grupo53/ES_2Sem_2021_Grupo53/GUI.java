@@ -1,13 +1,7 @@
 package ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53;
 
-
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -33,7 +27,7 @@ public class GUI extends Application{
 		
 	}
 	
-	public void main(String[] args) {
+	public static void main(String[] args) {
 		launch(args);
 	}
 
