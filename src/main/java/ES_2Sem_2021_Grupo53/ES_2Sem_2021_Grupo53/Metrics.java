@@ -12,11 +12,12 @@ import java.io.BufferedReader;
 //Metric Extraction File
 public class Metrics {
     
-	private int numberOfPackets = 0; //Increment every time we enter a new folder
+	private int numberOfPackages = 0; //Increment every time we enter a new folder
 	private int numberOfClasses = 0; //Increment every time we enter a new file
 	private int numberOfMethods = 0;//Increment every time we enter a new method
 	private int numberOfLines = 0;//Increment every time we enter a new line
-
+	private ArrayList<File> files = new ArrayList<File>();
+	
 	/**
 	 * A Method that extracts various methods
 	 * 
@@ -32,76 +33,78 @@ public class Metrics {
 	 * @throws Exception in case it can't open the file 
 	 */
 	
-	public int[] getMetrics(String Path) {
+	public boolean getMetrics(String Path) {
 		
 		try {
 			
-			BufferedReader file = new BufferedReader(new FileReader(Path));
+			File fileOrigins = new File(Path);
+			decomposePackages(fileOrigins);
+			ArrayList<File> files = getFiles();
 			
-			String line;
-			String className;
-			
-			int numberOfLinesClass = 0; // Increment every new line in the class
-			int numberOfMethodsClass = 0; //Increment every time we enter a new method in the class
-			int numberOfLinesMethod = 0;//Increment every new line till end of method
-			int numberOfLoops = 0;//Increment every time there is a for or while loop in the method
-		
-			ArrayList<Integer> methodsCyclomatic = new ArrayList<Integer>();
-			
-			int[] answers = new int[2];
-			answers[0] = 0;
-			answers[1] = 0;
-			
-			while((line=file.readLine()) != null) {
+			for(int i = 0; i < files.size(); i++) {
 				
-				if(!line.trim().isEmpty() && !line.contains("//") && !line.contains("package") && !line.contains("import")) { // Checks if it is a valid line i.e. is not an import or package statement and is not a comment or empty line
-					
-					if(numberOfLinesClass == 0) {
-						
-						className = getClassName(line); 
-					}
-					
-					numberOfLinesClass++;
-					
-					if(isMethod(line)) {
-					//If new Method we have to add the cyclomatic and num of lines of method to the xlsx file and reset the counters to 0
-						numberOfLinesMethod = 0;
-						numberOfMethodsClass++;
-						numberOfLoops = 0;
-						setNumberOfMethods(getNumberOfMethods() + 1);
-						methodsCyclomatic.add(numberOfLoops);
-						//Print method info to xlsx file
-					}
-					numberOfLinesMethod++;
-					// if line has a for or a while 
-						numberOfLoops++;
-					
-				}
-			}
-			int classComplexity = 0; //Set to max of array of methodsCyclomatic 
-			setNumberOfClasses(getNumberOfClasses() + 1);
-			setNumberOfLines(getNumberOfLines() + numberOfLinesClass);
-			//Print class info to xlsx file
-			
-			file.close();
+				BufferedReader file = new BufferedReader(new FileReader(files.get(i)));
+				
+				String line;
+				String className;
 
-			answers[0] = numberOfLinesClass;
-			answers[1] = numberOfMethodsClass;
-			
-			return answers;
+				int numberOfLinesClass = 0; // Increment every new line in the class
+				int numberOfMethodsClass = 0; //Increment every time we enter a new method in the class
+				int numberOfLinesMethod = 0;//Increment every new line till end of method
+				int numberOfLoops = 0;//Increment every time there is a for or while loop in the method
+
+				ArrayList<Integer> methodsCyclomatic = new ArrayList<Integer>();
+				
+				while((line = file.readLine()) != null) {
+
+					if(!line.trim().isEmpty() && !line.contains("//") && !line.contains("package") && !line.contains("import")) { // Checks if it is a valid line i.e. is not an import or package statement and is not a comment or empty line
+
+						if(numberOfLinesClass == 0) {
+
+							className = getClassName(line); 
+						}
+
+						numberOfLinesClass++;
+
+						if(isMethod(line)) {
+							
+							//If new Method we have to add the cyclomatic and num of lines of method to the xlsx file and reset the counters to 0
+							numberOfLinesMethod = 0;
+							numberOfMethodsClass++;
+							numberOfLoops = 0;
+							setNumberOfMethods(getNumberOfMethods() + 1);
+							methodsCyclomatic.add(numberOfLoops);
+							//Print method info to xlsx file
+							
+						}
+						
+						numberOfLinesMethod++;
+						// if line has a for or a while 
+						numberOfLoops++;
+
+					}
+				}
+				
+				int classComplexity = 0; //Set to max of array of methodsCyclomatic 
+				setNumberOfClasses(getNumberOfClasses() + 1);
+				setNumberOfLines(getNumberOfLines() + numberOfLinesClass);
+				//Print class info to xlsx file
+
+				file.close();
+
+			}
 			
 		}catch(Exception e){
-		
+
 			e.printStackTrace();
-		
+
 		}
 	//1-Open files from path
 		//If path is empty throw exception(Return false) failure
 	//2-Loop to parse each packages
-		setNumberOfPackets(getNumberOfPackets() + 1);
 	//3-Loop to parse each file in the packages
-		int [] def = new int[2];
-		return def;
+		
+		return true;
 	}
 	
 	/**
@@ -169,16 +172,48 @@ public class Metrics {
 		}
 		
 	}
-		
-	public int getNumberOfPackets() {
 	
-		return numberOfPackets;
+	/**
+	 * Takes the path and counts the number of packages and puts every file in an Array 
+	 * 
+	 * This method counts every package in the given path and puts every file(class) in an array of 
+	 * files for metric extraction
+	 * 
+	 * @param path (Sting)
+	 */
+	public void decomposePackages(File path) {
+
+		setNumberOfPackages(1);//1 or 0 depends on whether we count the original package 
+
+		for (File fileEntry : path.listFiles()) {
+
+			if (fileEntry.isDirectory()) {
+
+				decomposePackages(fileEntry);
+
+				setNumberOfPackages(getNumberOfPackages() + 1);
+
+			} else {
+
+				getFiles().add(fileEntry);
+
+			}
+
+		}
+
+	}
+		
+	
+		
+	public int getNumberOfPackages() {
+	
+		return numberOfPackages;
 	
 	}
 
-	public void setNumberOfPackets(int numberOfPackets) {
+	public void setNumberOfPackages(int numberOfPackets) {
 	
-		this.numberOfPackets = numberOfPackets;
+		this.numberOfPackages = numberOfPackets;
 	
 	}
 
@@ -216,6 +251,14 @@ public class Metrics {
 
 		this.numberOfLines = numberOfLines;
 	
+	}
+
+	public ArrayList<File> getFiles() {
+		return files;
+	}
+
+	public void setFiles(ArrayList<File> files) {
+		this.files = files;
 	}
 
 }
