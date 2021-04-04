@@ -136,6 +136,28 @@ public class Metrics {
 	}
 	
 	/**
+	 * A method that receives a line of code and returns the method name
+	 * 
+	 *  First it splits the string by "("  and takes the first item of the split string and splits it again this time by " " then it 
+	 * 	returns the last String in the new String[] without its last character to avoid the "(" that is split along with the method name.
+	 * 	WARNING it does not check whether line is a method so be careful with the arguments being passed to it .
+	 * 
+	 * @param line(String line of code)
+	 * @return method name
+	 */
+	
+	public String getMethodName(String line){
+		
+		String[] ogHelper = line.split("\\(");
+		String[] helper = ogHelper[0].split(" ");
+		
+		String answer = helper[helper.length -1];
+		
+		return answer.substring(0, answer.length());
+		
+	}
+	
+	/**
 	 * Method that determines whether a given line of code is the start of a method
 	 * 
 	 * First it checks whether the line of code has parenthesis in it and if it does splits the string by "(" if it does not returns false
@@ -181,6 +203,7 @@ public class Metrics {
 	 * 
 	 * @param path (Sting)
 	 */
+	
 	public void decomposePackages(File path) {
 
 		setNumberOfPackages(1);//1 or 0 depends on whether we count the original package 
@@ -202,8 +225,6 @@ public class Metrics {
 		}
 
 	}
-		
-	
 		
 	public int getNumberOfPackages() {
 	
@@ -254,11 +275,15 @@ public class Metrics {
 	}
 
 	public ArrayList<File> getFiles() {
+		
 		return files;
+	
 	}
 
 	public void setFiles(ArrayList<File> files) {
+	
 		this.files = files;
+	
 	}
 
 }

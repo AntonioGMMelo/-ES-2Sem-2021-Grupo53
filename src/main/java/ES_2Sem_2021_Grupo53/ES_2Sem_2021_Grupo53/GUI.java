@@ -1,6 +1,7 @@
 package ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53;
 
 import javafx.application.Application;
+<<<<<<< HEAD
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,6 +11,11 @@ import javafx.scene.text.Text;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+=======
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+>>>>>>> 6727ebc4e7ae9e84fe8e1188d74510961c733272
 import javafx.stage.Stage;
 
 public class GUI extends Application{
