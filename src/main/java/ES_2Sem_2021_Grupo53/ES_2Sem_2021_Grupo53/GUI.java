@@ -27,62 +27,79 @@ public class GUI extends Application{
 	
 	Label metrics;
 	Label lOperator;
-	Label limits;
-	
+
 	ComboBox metriCB;
 	ComboBox cb1;
 	
-	Button choose;
 	
 	/**
-	 * This button has to redirect the user to a form 
-	 * so he can set limits of the metric chosen!.
+	 * This method creates a combo box
+	 * so the user can chose the 
+	 * metric he wants to use.
 	 * */
+	private void chooseMetrics() {
+		String metricTest[] = { "metric1", "metric2", "metric3", "metric4" };
+		metrics = new Label("Choose Metrics");
+		metriCB = new ComboBox(FXCollections.observableArrayList(metricTest));
+		metricCBAtion();
+	}
+	
+	/**Once you choose a metric 
+	 * you are redirected
+	 * to a new window so you can 
+	 * choose a limit for the metric 
+	 * chosen. :D*/
 	@SuppressWarnings("unchecked")
-	private void chooseButtonAction() {
-		choose.setOnAction(new EventHandler() {
+	private void metricCBAtion() {
+		metriCB.setOnAction(new EventHandler() {
 			@Override
 			public void handle(Event event) {
 				secondaryStage.setTitle("Choose Limits");
-				Label metChosen = new Label("Metric chosen: ");				
-				secGrid.add(metChosen, 1, 1);
-				
+				Label metChosen = new Label((String) metriCB.getValue());			
+				secGrid.add(metChosen, 2, 1);
+
 				Spinner choice = new Spinner(0, 1000, 0);
-			    choice.setEditable(true);
-				secGrid.add(choice, 1, 2);
-			
+				choice.setEditable(true);
+				secGrid.add(choice, 2, 2);
 				
+				Button ok = new Button("Ok");
+				Button cancel = new Button ("Cancel");
+				secGrid.add(ok, 2,4);
+				secGrid.add(cancel, 3, 4);
+				
+
 				secondaryStage.setScene(secondScene);
 				secondaryStage.show();
 			}
 		});
 	}
 	
+	/**
+	 * This method creates a combo box
+	 * so the user can chose the 
+	 * logic operator to form logic expressions
+	 * he'll use with the metric chosen 
+	 * */
+	private void logicOperator() {
+		String logicOp[] = { "AND", "OR" };
+		lOperator = new Label("Choose Logic Operator");
+		cb1 = new ComboBox(FXCollections.observableArrayList(logicOp));
+	}
+	
+	
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
 		primaryStage.setTitle("Code Smells");
 		
-		metrics = new Label("Choose Metrics");
-		metriCB = new ComboBox();
-		
-		limits = new Label("Choose limits");
-		choose = new Button("Go!");
-		chooseButtonAction();
-		
-		String logicOp[] =
-            { "AND", "OR" };
-		
-		lOperator = new Label("Choose Logic Operator");
-		cb1 = new ComboBox(FXCollections.observableArrayList(logicOp));
-		
-		
 		grid.setHgap(10);
 		grid.setVgap(10);
 		
+		chooseMetrics();		
+		logicOperator();
+		
 		grid.add(metrics, 1, 1);
-		grid.add(limits, 1, 2);
-		grid.add(choose, 2, 2);
 		grid.add(lOperator, 1, 3);
 		
 		grid.add(metriCB, 2, 1);
@@ -92,6 +109,7 @@ public class GUI extends Application{
 		primaryStage.show();
 		
 	}
+
 	
 	public static void main(String[] args) {
 		launch(args);
