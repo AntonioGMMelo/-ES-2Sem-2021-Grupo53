@@ -11,13 +11,8 @@ import java.io.BufferedReader;
 
 //Metric Extraction File
 public class Metrics {
-<<<<<<< HEAD
-
-	private int numberOfPackets = 0; //Increment every time we enter a new folder
-=======
     
 	private int numberOfPackages = 0; //Increment every time we enter a new folder
->>>>>>> 6f5b79ffd5211e8f3c86363b4cd3bea135591731
 	private int numberOfClasses = 0; //Increment every time we enter a new file
 	private int numberOfMethods = 0;//Increment every time we enter a new method
 	private int numberOfLines = 0;//Increment every time we enter a new line
