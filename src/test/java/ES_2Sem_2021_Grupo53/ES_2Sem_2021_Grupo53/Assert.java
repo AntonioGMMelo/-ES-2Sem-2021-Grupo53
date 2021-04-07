@@ -24,17 +24,10 @@ public class Assert {
 =======
 		String PATH = "C:\\Users\\Ant\\eclipse-workspace\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy";
 		
-		//String PATH ="C:\\Users\\Maria\\Desktop\\3ºAno\\Engenharia de Software\\Projeto\\ES\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy\\DummyClass.java";
-		//String PATH2 ="C:\\Users\\Maria\\Desktop\\3ºAno\\Engenharia de Software\\Projeto\\ES\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy\\DummyClass2.java";
-		
-		//For LOC_CLass
-		int[] answer1 = new Metrics().getMetrics(PATH);
+		//For getMetrics
+		boolean answer1 = new Metrics().getMetrics(PATH);
 
-		int[] expected1 = new int[2];
-		expected1[0] = 20;
-		expected1[1] = 4;
-		
-		assertArrayEquals(expected1, answer1);
+		assertTrue(answer1);
 		
 		//getClassName
 		
@@ -68,6 +61,16 @@ public class Assert {
 		assertFalse(result11);
 		assertFalse(result12);
 >>>>>>> 6f5b79ffd5211e8f3c86363b4cd3bea135591731
+		
+		//getMethodName
+		
+		String result13 = new Metrics().getMethodName("private static void methodName() {");
+		String result14 = new Metrics().getMethodName("private int methodName(int a, int b){");
+		String result15 = new Metrics().getMethodName("public String methodName(int c) {");
+		
+		assertEquals("methodName", result13);
+		assertEquals("methodName", result14);
+		assertEquals("methodName", result15);
 		
 	}
 	

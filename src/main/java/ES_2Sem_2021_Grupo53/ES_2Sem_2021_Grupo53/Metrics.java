@@ -80,7 +80,7 @@ public class Metrics {
 
 =======
 	
-	public int[] getMetrics(String Path) {
+	public boolean getMetrics(String Path) {
 		
 		try {
 			
@@ -101,11 +101,7 @@ public class Metrics {
 				int numberOfLoops = 0;//Increment every time there is a for or while loop in the method
 
 				ArrayList<Integer> methodsCyclomatic = new ArrayList<Integer>();
-
-				int[] answers = new int[2];
-				answers[0] = 0;
-				answers[1] = 0;
-
+				
 				while((line = file.readLine()) != null) {
 
 					if(!line.trim().isEmpty() && !line.contains("//") && !line.contains("package") && !line.contains("import")) { // Checks if it is a valid line i.e. is not an import or package statement and is not a comment or empty line
@@ -143,11 +139,6 @@ public class Metrics {
 
 				file.close();
 
-				answers[0] = numberOfLinesClass;
-				answers[1] = numberOfMethodsClass;
-
-				return answers;
-
 			}
 			
 >>>>>>> 6f5b79ffd5211e8f3c86363b4cd3bea135591731
@@ -179,8 +170,8 @@ public class Metrics {
 =======
 	//2-Loop to parse each packages
 	//3-Loop to parse each file in the packages
-		int [] def = new int[2];
-		return def;
+		
+		return true;
 	}
 	
 	/**
@@ -208,6 +199,28 @@ public class Metrics {
 			return s.substring(0, s.length() - 1 );
 			
 		}
+		
+	}
+	
+	/**
+	 * A method that receives a line of code and returns the method name
+	 * 
+	 *  First it splits the string by "("  and takes the first item of the split string and splits it again this time by " " then it 
+	 * 	returns the last String in the new String[] without its last character to avoid the "(" that is split along with the method name.
+	 * 	WARNING it does not check whether line is a method so be careful with the arguments being passed to it .
+	 * 
+	 * @param line(String line of code)
+	 * @return method name
+	 */
+	
+	public String getMethodName(String line){
+		
+		String[] ogHelper = line.split("\\(");
+		String[] helper = ogHelper[0].split(" ");
+		
+		String answer = helper[helper.length -1];
+		
+		return answer.substring(0, answer.length());
 		
 	}
 	
@@ -249,29 +262,36 @@ public class Metrics {
 		
 	}
 	
-public void decomposePackages(File path) {
-		
-	setNumberOfPackages(1);//1 or 0 depends on whether we count the original package 
+	/**
+	 * Takes the path and counts the number of packages and puts every file in an Array 
+	 * 
+	 * This method counts every package in the given path and puts every file(class) in an array of 
+	 * files for metric extraction
+	 * 
+	 * @param path (Sting)
+	 */
 	
-	for (File fileEntry : path.listFiles()) {
-	   
-		if (fileEntry.isDirectory()) {
-	   	
-	    	decomposePackages(fileEntry);
-	    	
-	    	setNumberOfPackages(getNumberOfPackages() + 1);
-	    	
-	    } else {
-	
-	    	getFiles().add(fileEntry);
-	    	
-	    }
-	 
+	public void decomposePackages(File path) {
+
+		setNumberOfPackages(1);//1 or 0 depends on whether we count the original package 
+
+		for (File fileEntry : path.listFiles()) {
+
+			if (fileEntry.isDirectory()) {
+
+				decomposePackages(fileEntry);
+
+				setNumberOfPackages(getNumberOfPackages() + 1);
+
+			} else {
+
+				getFiles().add(fileEntry);
+
+			}
+
+		}
+
 	}
-	
-}
-		
-	
 		
 	public int getNumberOfPackages() {
 	
@@ -326,11 +346,15 @@ public void decomposePackages(File path) {
 	}
 
 	public ArrayList<File> getFiles() {
+		
 		return files;
+	
 	}
 
 	public void setFiles(ArrayList<File> files) {
+	
 		this.files = files;
+	
 	}
 
 }
