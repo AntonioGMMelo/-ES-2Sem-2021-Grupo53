@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -23,14 +24,32 @@ public class GUI extends Application{
 	
 	Stage secondaryStage = new Stage();
 	GridPane secGrid = new GridPane();
-	Scene secondScene = new Scene(secGrid, 200, 100);
+	Scene secondScene = new Scene(secGrid, 250, 200);
 	
 	Label metrics;
 	Label lOperator;
+	Label pathLabel;
 
 	ComboBox metriCB;
 	ComboBox cb1;
 	
+	Button path;
+	Button ok;
+	Button cancel;
+	
+	TextField pathField;
+	
+	
+	/**
+	 * This method creates the layout
+	 * for the user to indicate the
+	 * wanted path*/
+	private void chooseYourPath() {
+		pathLabel = new Label("Tell us your path!");
+		pathField = new TextField("Tell us your path here!");
+		path = new Button ("path");
+		pathBttonAction();
+	}
 	
 	/**
 	 * This method creates a combo box
@@ -38,78 +57,114 @@ public class GUI extends Application{
 	 * metric he wants to use.
 	 * */
 	private void chooseMetrics() {
-		String metricTest[] = { "metric1", "metric2", "metric3", "metric4" };
+		String metricListExemple[] = { "metric1", "metric2", "metric3", "metric4" };
 		metrics = new Label("Choose Metrics");
-		metriCB = new ComboBox(FXCollections.observableArrayList(metricTest));
-		metricCBAtion();
+		metriCB = new ComboBox(FXCollections.observableArrayList(metricListExemple));
+		secGrid.add(metrics, 1, 1);
+		secGrid.add(metriCB, 1, 2);
 	}
 	
-	/**Once you choose a metric 
-	 * you are redirected
-	 * to a new window so you can 
-	 * choose a limit for the metric 
-	 * chosen. :D*/
-	@SuppressWarnings("unchecked")
-	private void metricCBAtion() {
-		metriCB.setOnAction(new EventHandler() {
-			@Override
-			public void handle(Event event) {
-				secondaryStage.setTitle("Choose Limits");
-				Label metChosen = new Label((String) metriCB.getValue());			
-				secGrid.add(metChosen, 2, 1);
-
-				Spinner choice = new Spinner(0, 1000, 0);
-				choice.setEditable(true);
-				secGrid.add(choice, 2, 2);
-				
-				Button ok = new Button("Ok");
-				Button cancel = new Button ("Cancel");
-				secGrid.add(ok, 2,4);
-				secGrid.add(cancel, 3, 4);
-				
-
-				secondaryStage.setScene(secondScene);
-				secondaryStage.show();
-			}
-		});
+	/**
+	 * This method creates a spinner
+	 * so the user can indicate
+	 * the limit wanted for said metric
+	 * */
+	private void chooseLimits() {
+		Label l = new Label("Choose the limits:" );
+		secGrid.add(l, 1, 4);
+		Spinner choice = new Spinner(0, 1000, 0);
+		choice.setEditable(true);
+		secGrid.add(choice, 1, 5);
 	}
 	
 	/**
 	 * This method creates a combo box
 	 * so the user can chose the 
-	 * logic operator to form logic expressions
+	 * logic operator to form the logic expressions
 	 * he'll use with the metric chosen 
 	 * */
 	private void logicOperator() {
 		String logicOp[] = { "AND", "OR" };
 		lOperator = new Label("Choose Logic Operator");
 		cb1 = new ComboBox(FXCollections.observableArrayList(logicOp));
+		secGrid.add(lOperator, 1, 6);
+		secGrid.add(cb1, 1, 7);
 	}
 	
+	//Exit buttons for the second window
+	private void exitButtons() {
+		ok = new Button("Ok");
+		cancel = new Button ("Cancel");
+		secGrid.add(ok, 1, 11);
+		secGrid.add(cancel, 4, 11);
+		exitButtonsAction();
+	}
 	
+	/** This method redirects the user
+	 * to a new window where he will choose
+	 * the metrics, threshold and logic operator
+	 * to work with :)
+	 * */
+	@SuppressWarnings("unchecked")
+	private void pathBttonAction() {
+		path.setOnAction(new EventHandler() {
+			@Override
+			public void handle(Event event) {
+				secondaryStage.getIcons().add(new Image(GUI.class.getResourceAsStream( "icon2.png")));
+				secondaryStage.setTitle("Choose Metric Wanted ");
+				secGrid.setHgap(2);
+				secGrid.setVgap(3);
+				
+				chooseMetrics();
+				chooseLimits();
+				logicOperator();
+				exitButtons();
+				
+				secondaryStage.setScene(secondScene);
+				secondaryStage.sizeToScene();
+				secondaryStage.show();
+			}
+		});
+	}
+	
+	//Makes the exit buttons exit the second stage
+	@SuppressWarnings("unchecked")
+	private void exitButtonsAction() {
+		ok.setOnAction(new EventHandler() {
+			@Override
+			public void handle(Event event) {
+				secondaryStage.close();
+			}
+		});
+		cancel.setOnAction(new EventHandler() {
+			@Override
+			public void handle(Event event) {
+				secondaryStage.close();
+			}
+		});
+	}
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
+		primaryStage.getIcons().add(new Image(GUI.class.getResourceAsStream( "icon.png")));
 		primaryStage.setTitle("Code Smells");
 		
 		grid.setHgap(10);
 		grid.setVgap(10);
 		
+		chooseYourPath();
 		chooseMetrics();		
 		logicOperator();
 		
-		grid.add(metrics, 1, 1);
-		grid.add(lOperator, 1, 3);
-		
-		grid.add(metriCB, 2, 1);
-		grid.add(cb1, 2, 3);
+		grid.add(pathLabel, 1, 1);
+		grid.add(pathField, 1, 2);
+		grid.add(path,2, 3);
 		
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
 	}
-
 	
 	public static void main(String[] args) {
 		launch(args);
