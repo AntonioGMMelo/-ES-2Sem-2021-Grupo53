@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -109,6 +110,7 @@ public class GUI extends Application{
 		path.setOnAction(new EventHandler() {
 			@Override
 			public void handle(Event event) {
+				secondaryStage.getIcons().add(new Image(GUI.class.getResourceAsStream( "icon2.png")));
 				secondaryStage.setTitle("Choose Metric Wanted ");
 				secGrid.setHgap(2);
 				secGrid.setVgap(3);
@@ -145,6 +147,7 @@ public class GUI extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
+		primaryStage.getIcons().add(new Image(GUI.class.getResourceAsStream( "icon.png")));
 		primaryStage.setTitle("Code Smells");
 		
 		grid.setHgap(10);
