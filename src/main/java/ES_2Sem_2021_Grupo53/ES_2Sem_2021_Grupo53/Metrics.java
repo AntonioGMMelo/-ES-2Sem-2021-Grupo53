@@ -1,6 +1,7 @@
 package ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.junit.Test;
 
@@ -11,13 +12,13 @@ import java.io.BufferedReader;
 
 //Metric Extraction File
 public class Metrics {
-    
+
 	private int numberOfPackages = 0; //Increment every time we enter a new folder
 	private int numberOfClasses = 0; //Increment every time we enter a new file
 	private int numberOfMethods = 0;//Increment every time we enter a new method
 	private int numberOfLines = 0;//Increment every time we enter a new line
 	private ArrayList<File> files = new ArrayList<File>();
-	
+
 	/**
 	 * A Method that extracts various methods
 	 * 
@@ -32,101 +33,66 @@ public class Metrics {
 	 * 
 	 * @throws Exception in case it can't open the file 
 	 */
-<<<<<<< HEAD
 
-	public int getMetrics(String Path) {
-
-		try {
-
-			BufferedReader file = new BufferedReader(new FileReader(Path));
-
-			String line;
-			int numberOfLinesClass = 0; // Increment every new line
-			int numberOfLinesMethod = 0;//Increment every new line till end of method
-			int numberOfLoops = 0;//Increment every time there is a for or while loop in the code
-			ArrayList<Integer> methodsCyclomatic = new ArrayList<Integer>();
-
-			while((line=file.readLine()) != null) {
-
-				if(!line.trim().isEmpty() && !line.contains("//") && !line.contains("package") && !line.contains("import")) { // Checks if it is a valid line i.e. is not an import or package statement and is not a comment or empty line
-
-					numberOfLinesClass++;
-
-					//If new Method we have to add the cyclomatic and num of lines of method to the xlsx file and reset the counters to 0
-					numberOfLinesMethod = 0;
-					numberOfLoops = 0;
-					setNumberOfMethods(getNumberOfMethods() + 1);
-					methodsCyclomatic.add(numberOfLoops);
-					//Print method info to xlsx file
-					numberOfLinesMethod++;
-					// if line has a for or a while 
-					numberOfLoops++;
-
-				}
-			}
-			int classComplexity = 0; //Set to max of array of methodsCyclomatic 
-			setNumberOfClasses(getNumberOfClasses() + 1);
-			setNumberOfLines(getNumberOfLines() + numberOfLinesClass);
-			//Print class info to xlsx file
-
-			file.close();
-
-			return numberOfLinesClass;
-
-=======
-	
 	public boolean getMetrics(String Path) {
-		
+
 		try {
-			
+
 			File fileOrigins = new File(Path);
 			decomposePackages(fileOrigins);
 			ArrayList<File> files = getFiles();
-			
+
 			for(int i = 0; i < files.size(); i++) {
-				
+
 				BufferedReader file = new BufferedReader(new FileReader(files.get(i)));
-				
+
 				String line;
 				String className;
+				String methodName = "";
 
 				int numberOfLinesClass = 0; // Increment every new line in the class
 				int numberOfMethodsClass = 0; //Increment every time we enter a new method in the class
-				int numberOfLinesMethod = 0;//Increment every new line till end of method
-				int numberOfLoops = 0;//Increment every time there is a for or while loop in the method
+				int numberOfLinesMethod = 0; //Increment every new line till end of method
+				int numberOfLoops = 0; //Increment every time there is a for or while loop in the method
+				
 
 				ArrayList<Integer> methodsCyclomatic = new ArrayList<Integer>();
-				
+
 				while((line = file.readLine()) != null) {
 
 					if(!line.trim().isEmpty() && !line.contains("//") && !line.contains("package") && !line.contains("import")) { // Checks if it is a valid line i.e. is not an import or package statement and is not a comment or empty line
 
 						if(numberOfLinesClass == 0) {
 
-							className = getClassName(line); 
+							className = getClassName(line);
+							
 						}
 
 						numberOfLinesClass++;
-
+						
+						if(numberOfLinesClass > 1){
+							numberOfLinesMethod++;
+						}
+						
+						if(line.trim().startsWith("for") || line.trim().startsWith("while")){ // if line has a for or a while 
+							numberOfLoops++;
+						}
+						
 						if(isMethod(line)) {
-							
+							methodName = getMethodName(line);
 							//If new Method we have to add the cyclomatic and num of lines of method to the xlsx file and reset the counters to 0
 							numberOfLinesMethod = 0;
 							numberOfMethodsClass++;
+							methodsCyclomatic.add(numberOfLoops);
 							numberOfLoops = 0;
 							setNumberOfMethods(getNumberOfMethods() + 1);
-							methodsCyclomatic.add(numberOfLoops);
 							//Print method info to xlsx file
-							
-						}
-						
-						numberOfLinesMethod++;
-						// if line has a for or a while 
-						numberOfLoops++;
-
+						}			
+																		
 					}
 				}
-				
+				methodsCyclomatic.add(numberOfLoops);
+				int numberOfLoopsClass = Collections.max(methodsCyclomatic);
 				int classComplexity = 0; //Set to max of array of methodsCyclomatic 
 				setNumberOfClasses(getNumberOfClasses() + 1);
 				setNumberOfLines(getNumberOfLines() + numberOfLinesClass);
@@ -135,8 +101,7 @@ public class Metrics {
 				file.close();
 
 			}
-			
->>>>>>> 6f5b79ffd5211e8f3c86363b4cd3bea135591731
+
 		}catch(Exception e){
 
 			e.printStackTrace();
@@ -144,31 +109,12 @@ public class Metrics {
 		}
 		//1-Open files from path
 		//If path is empty throw exception(Return false) failure
-<<<<<<< HEAD
 		//2-Loop to parse each packages
-		setNumberOfPackets(getNumberOfPackets() + 1);
 		//3-Loop to parse each file in the packages
-		return 0;
-		
-	}
 
-	public int getNumberOfPackets() {
-
-		return numberOfPackets;
-
-	}
-
-	public void setNumberOfPackets(int numberOfPackets) {
-
-		this.numberOfPackets = numberOfPackets;
-
-=======
-	//2-Loop to parse each packages
-	//3-Loop to parse each file in the packages
-		
 		return true;
 	}
-	
+
 	/**
 	 * Takes a Line of Code(String) and returns the class name for that line
 	 * 
@@ -180,23 +126,23 @@ public class Metrics {
 	 * @param line (String to extract the class name from)
 	 * @return class name (String)
 	 */
-	
+
 	public String getClassName(String line){
-		
+
 		String[] helper = line.split(" ");
-		
+
 		if(helper[helper.length - 1].equals("{")) {
-			
+
 			return helper[helper.length -2];
-			
+
 		}else{
 			String s = helper[helper.length -1];
 			return s.substring(0, s.length() - 1 );
-			
+
 		}
-		
+
 	}
-	
+
 	/**
 	 * A method that receives a line of code and returns the method name
 	 * 
@@ -207,18 +153,18 @@ public class Metrics {
 	 * @param line(String line of code)
 	 * @return method name
 	 */
-	
+
 	public String getMethodName(String line){
-		
+
 		String[] ogHelper = line.split("\\(");
 		String[] helper = ogHelper[0].split(" ");
-		
+
 		String answer = helper[helper.length -1];
-		
+
 		return answer.substring(0, answer.length());
-		
+
 	}
-	
+
 	/**
 	 * Method that determines whether a given line of code is the start of a method
 	 * 
@@ -230,33 +176,33 @@ public class Metrics {
 	 * @param line (String line of code)
 	 * @return boolean true if it is a Method and false if it is not
 	 */
-	
+
 	public boolean isMethod(String line) {
-		
+
 		if(line.indexOf("(") >= 0){
-			
+
 			String[] help = line.split("\\(");
 			String[] helpNext = help[0].split(" ");
 			helpNext[0] = helpNext[0].trim();
-			
+
 			if(!helpNext[0].contains("print") && (helpNext[0].equals("private") || helpNext[0].equals("public") || helpNext[0].equals("static") || helpNext[0].equals("void") || helpNext[0].contains("int") || helpNext[0].contains("String") || helpNext[0].contains("boolean") || helpNext[0].contains("char"))) {
-				
+
 				return true;
-				
+
 			}else {
-				
+
 				return false;
-				
+
 			}
-		
+
 		}else {
-			
+
 			return false;
-			
+
 		}
-		
+
 	}
-	
+
 	/**
 	 * Takes the path and counts the number of packages and puts every file in an Array 
 	 * 
@@ -265,7 +211,7 @@ public class Metrics {
 	 * 
 	 * @param path (Sting)
 	 */
-	
+
 	public void decomposePackages(File path) {
 
 		setNumberOfPackages(1);//1 or 0 depends on whether we count the original package 
@@ -287,18 +233,17 @@ public class Metrics {
 		}
 
 	}
-		
+
 	public int getNumberOfPackages() {
-	
+
 		return numberOfPackages;
-	
+
 	}
 
 	public void setNumberOfPackages(int numberOfPackets) {
-	
+
 		this.numberOfPackages = numberOfPackets;
-	
->>>>>>> 6f5b79ffd5211e8f3c86363b4cd3bea135591731
+
 	}
 
 	public int getNumberOfClasses() {
@@ -319,15 +264,12 @@ public class Metrics {
 
 	}
 
-<<<<<<< HEAD
 	public void setNumberOfMethods(int numberOfMethods) {
 
 		this.numberOfMethods = numberOfMethods;
 
 	}
 
-=======
->>>>>>> 6f5b79ffd5211e8f3c86363b4cd3bea135591731
 	public int getNumberOfLines() {
 
 		return numberOfLines;
@@ -341,15 +283,15 @@ public class Metrics {
 	}
 
 	public ArrayList<File> getFiles() {
-		
+
 		return files;
-	
+
 	}
 
 	public void setFiles(ArrayList<File> files) {
-	
+
 		this.files = files;
-	
+
 	}
 
 }

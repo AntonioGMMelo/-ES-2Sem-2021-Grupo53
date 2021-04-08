@@ -12,17 +12,7 @@ public class Assert {
 	@Test
 	public void testAssertion(){
 		
-<<<<<<< HEAD
-		String PATH = "C:\\Users\\migue\\eclipse-workspace\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy\\DummyClass.java";		
-		String PATH2 = "C:\\Users\\migue\\eclipse-workspace\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy\\DummyClass2.java";
-
-		int answer1 = new Metrics().getMetrics(PATH); 
-		int answer2 = new Metrics().getMetrics(PATH2);
-					
-		assertEquals(20, answer1);
-		assertEquals(44, answer2);
-=======
-		String PATH = "C:\\Users\\Ant\\eclipse-workspace\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy";
+		String PATH = "C:\\Users\\migue\\eclipse-workspace\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy";
 		
 		//For getMetrics
 		boolean answer1 = new Metrics().getMetrics(PATH);
@@ -60,7 +50,6 @@ public class Assert {
 		assertTrue(result10);
 		assertFalse(result11);
 		assertFalse(result12);
->>>>>>> 6f5b79ffd5211e8f3c86363b4cd3bea135591731
 		
 		//getMethodName
 		
