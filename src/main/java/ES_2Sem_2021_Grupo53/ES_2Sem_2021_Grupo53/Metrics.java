@@ -71,29 +71,38 @@ public class Metrics {
 						numberOfLinesClass++;
 						
 						if(numberOfLinesClass > 1){
+						
 							numberOfLinesMethod++;
+						
 						}
 						
 						if(line.trim().startsWith("for") || line.trim().startsWith("while")){ // if line has a for or a while 
+						
 							numberOfLoops++;
+						
 						}
 						
 						if(isMethod(line)) {
 							methodName = getMethodName(line);
 							//If new Method we have to add the cyclomatic and num of lines of method to the xlsx file and reset the counters to 0
+				
 							numberOfLinesMethod = 0;
 							numberOfMethodsClass++;
 							methodsCyclomatic.add(numberOfLoops);
 							numberOfLoops = 0;
 							setNumberOfMethods(getNumberOfMethods() + 1);
+							
 							//Print method info to xlsx file
 						}			
 																		
 					}
 				}
+				
 				methodsCyclomatic.add(numberOfLoops);
+				
 				int numberOfLoopsClass = Collections.max(methodsCyclomatic);
 				int classComplexity = 0; //Set to max of array of methodsCyclomatic 
+				
 				setNumberOfClasses(getNumberOfClasses() + 1);
 				setNumberOfLines(getNumberOfLines() + numberOfLinesClass);
 				//Print class info to xlsx file
