@@ -2,13 +2,18 @@ package ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
 import org.junit.Test;
-
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.BufferedReader;
-
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 //Metric Extraction File
 public class Metrics {
@@ -37,15 +42,69 @@ public class Metrics {
 	public boolean getMetrics(String Path) {
 
 		try {
+			
+			//Create XLSX File
+			 XSSFWorkbook workbook = new XSSFWorkbook(); 
+	         
+		     XSSFSheet sheet = workbook.createSheet("Dummy");		     
+		     //Create Firsts Row
+		     Row row = sheet.createRow(0);
+		     
+		     //Create titles to add to first row
+		     String [] titles = new String[11];
+		     titles[0] = "MethodID";
+		     titles[1] = "Package";
+		     titles[2] = "Class";
+		     titles[3] = "Method";
+		     titles[4] = "NOM_Class";
+		     titles[5] = "LOC_class";
+		     titles[6] = "WMC_Class";
+		     titles[7] = "is_God_Class";
+		     titles[8] = "LOC_Method";
+		     titles[9] = "CYCLO_Method";
+		     titles[10] = "is_Long_Method";
+		     
+		     //Setting normal font
+		     XSSFFont defaultFont = workbook.createFont();
+		     defaultFont.setFontHeightInPoints((short)10);
+		     defaultFont.setFontName("Arial");
+		     defaultFont.setColor(IndexedColors.BLACK.getIndex());
+		     defaultFont.setBold(false);
+		     defaultFont.setItalic(false);
+		     
+		     //Titles font
+		     XSSFCellStyle style = workbook.createCellStyle();
+		     
+		     XSSFFont font = workbook.createFont();
+		     
+		     font.setFontHeightInPoints((short) 15);
+		     font.setBold(true);
+		     
+		     style.setFont(font);       
+		     
+ 		     //Add Titles to row
+		     for(int i = 0; i < titles.length; i++) {
+		    	 
+		    	Cell cell = row.createCell(i);
+		     
+		     	cell.setCellValue(titles[i]);
+		     
+		     	cell.setCellStyle(style);
 
+		     }
+		     
+		    //Create File with the original PATH and call decomposePackages to get all the classes and the number of packages
 			File fileOrigins = new File(Path);
 			decomposePackages(fileOrigins);
 			ArrayList<File> files = getFiles();
 
+			//Outer Class Loop
 			for(int i = 0; i < files.size(); i++) {
 
+				//Open Class File 
 				BufferedReader file = new BufferedReader(new FileReader(files.get(i)));
 
+				//Declaring initial values for variables
 				String line;
 				String className;
 				String methodName = "";
@@ -58,34 +117,39 @@ public class Metrics {
 
 				ArrayList<Integer> methodsCyclomatic = new ArrayList<Integer>();
 
+				//Inner Class Loop
 				while((line = file.readLine()) != null) {
 
 					if(!line.trim().isEmpty() && !line.contains("//") && !line.contains("package") && !line.contains("import")) { // Checks if it is a valid line i.e. is not an import or package statement and is not a comment or empty line
 
+						//Gets the class name
 						if(numberOfLinesClass == 0) {
 
 							className = getClassName(line);
 							
 						}
 
+						//Increments the LOC_Class metric
 						numberOfLinesClass++;
 						
+						//Increments the LOC_Method metric
 						if(numberOfLinesClass > 1){
 						
 							numberOfLinesMethod++;
 						
 						}
 						
+						//Increments the CYCLO_Method metric
 						if(line.trim().startsWith("for") || line.trim().startsWith("while")){ // if line has a for or a while 
 						
 							numberOfLoops++;
 						
 						}
 						
+						//If it is a new method gets its name resets method metrics, increments NOM_Class metric and total number of methods metrics, also puts the CYCLO_Method metric in an array list for further use
 						if(isMethod(line)) {
+							
 							methodName = getMethodName(line);
-							//If new Method we have to add the cyclomatic and num of lines of method to the xlsx file and reset the counters to 0
-				
 							numberOfLinesMethod = 0;
 							numberOfMethodsClass++;
 							methodsCyclomatic.add(numberOfLoops);
@@ -98,16 +162,36 @@ public class Metrics {
 					}
 				}
 				
+				//Adds the last methods CYCLO_Metod metric to the list
 				methodsCyclomatic.add(numberOfLoops);
 				
+				//Gets the max in the CYCLO_Method list to define WMC_Class metric
 				int numberOfLoopsClass = Collections.max(methodsCyclomatic);
-				int classComplexity = 0; //Set to max of array of methodsCyclomatic 
 				
+				//Increment NUmber of total classes by 1 and number of total lines of code by LOC_Class
 				setNumberOfClasses(getNumberOfClasses() + 1);
 				setNumberOfLines(getNumberOfLines() + numberOfLinesClass);
-				//Print class info to xlsx file
 
 				file.close();
+				
+				//auto sizing every column
+				sheet.autoSizeColumn(0);
+				sheet.autoSizeColumn(1);
+				sheet.autoSizeColumn(2);
+				sheet.autoSizeColumn(3);
+				sheet.autoSizeColumn(4);
+				sheet.autoSizeColumn(5);
+				sheet.autoSizeColumn(6);
+				sheet.autoSizeColumn(7);
+				sheet.autoSizeColumn(8);
+				sheet.autoSizeColumn(9);
+				sheet.autoSizeColumn(10);
+				
+				
+				//Write the workbook in file system
+	            FileOutputStream out = new FileOutputStream(new File("Dummy.xlsx"));
+	            workbook.write(out);
+	            out.close();
 
 			}
 

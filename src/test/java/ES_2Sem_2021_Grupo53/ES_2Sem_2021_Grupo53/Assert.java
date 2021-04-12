@@ -1,7 +1,6 @@
 package ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53;
 
 import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -12,7 +11,7 @@ public class Assert {
 	@Test
 	public void testAssertion(){
 		
-		String PATH = "C:\\Users\\migue\\eclipse-workspace\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy";
+		String PATH = "C:\\Users\\ant\\eclipse-workspace\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy";
 		
 		//For getMetrics
 		boolean answer1 = new Metrics().getMetrics(PATH);
