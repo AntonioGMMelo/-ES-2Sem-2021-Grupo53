@@ -1,5 +1,7 @@
 package ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53;
 
+
+import java.io.File;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -12,9 +14,9 @@ import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class GUI extends Application{
@@ -29,27 +31,22 @@ public class GUI extends Application{
 	Label metrics;
 	Label lOperator;
 	Label pathLabel;
-
+	Label codeSmell;
+	
 	ComboBox metriCB;
 	ComboBox cb1;
 	
 	Button path;
 	Button ok;
 	Button cancel;
+	Button codeSmellButton;
+	Button chooseSettings;
 	
 	TextField pathField;
+	TextField Smell;
 	
+	FileChooser fileChooser = new FileChooser();
 	
-	/**
-	 * This method creates the layout
-	 * for the user to indicate the
-	 * wanted path*/
-	private void chooseYourPath() {
-		pathLabel = new Label("Tell us your path!");
-		pathField = new TextField("Tell us your path here!");
-		path = new Button ("path");
-		pathBttonAction();
-	}
 	
 	/**
 	 * This method creates a combo box
@@ -57,7 +54,7 @@ public class GUI extends Application{
 	 * metric he wants to use.
 	 * */
 	private void chooseMetrics() {
-		String metricListExemple[] = { "metric1", "metric2", "metric3", "metric4" };
+		String metricListExemple[] = { "is_god_class", "is_long_method"};
 		metrics = new Label("Choose Metrics");
 		metriCB = new ComboBox(FXCollections.observableArrayList(metricListExemple));
 		secGrid.add(metrics, 1, 1);
@@ -100,6 +97,18 @@ public class GUI extends Application{
 		exitButtonsAction();
 	}
 	
+	/**
+	 * This method creates the layout
+	 * for the user to indicate the
+	 * wanted path*/
+	private void chooseYourPath() {
+		pathLabel = new Label("Path Chosen: ");
+		path = new Button ("Choose path");
+		pathField = new TextField();
+		pathField.setEditable(true);
+		pathBttonAction();
+	}
+        
 	/** This method redirects the user
 	 * to a new window where he will choose
 	 * the metrics, threshold and logic operator
@@ -110,19 +119,10 @@ public class GUI extends Application{
 		path.setOnAction(new EventHandler() {
 			@Override
 			public void handle(Event event) {
-				secondaryStage.getIcons().add(new Image(GUI.class.getResourceAsStream( "icon2.png")));
-				secondaryStage.setTitle("Choose Metric Wanted ");
-				secGrid.setHgap(2);
-				secGrid.setVgap(3);
-				
-				chooseMetrics();
-				chooseLimits();
-				logicOperator();
-				exitButtons();
-				
-				secondaryStage.setScene(secondScene);
-				secondaryStage.sizeToScene();
-				secondaryStage.show();
+				fileChooser.setTitle("Open Resource File");
+				File file  = fileChooser.showOpenDialog(secondaryStage);
+				String sf = file.getAbsolutePath();
+				pathField.setText(sf);
 			}
 		});
 	}
@@ -150,6 +150,7 @@ public class GUI extends Application{
 		primaryStage.getIcons().add(new Image(GUI.class.getResourceAsStream( "icon.png")));
 		primaryStage.setTitle("Code Smells");
 		
+		
 		grid.setHgap(10);
 		grid.setVgap(10);
 		
@@ -157,13 +158,40 @@ public class GUI extends Application{
 		chooseMetrics();		
 		logicOperator();
 		
+		chooseSettings = new Button("Choose Settings");
+		chooseSettingsAction();
+		
 		grid.add(pathLabel, 1, 1);
 		grid.add(pathField, 1, 2);
-		grid.add(path,2, 3);
+		grid.add(path,1, 3);
+		
+		grid.add(chooseSettings,1, 4);
 		
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void chooseSettingsAction() {
+		chooseSettings.setOnAction(new EventHandler() {
+			@Override
+			public void handle(Event event) {
+				secondaryStage.getIcons().add(new Image(GUI.class.getResourceAsStream( "icon2.png")));
+				secondaryStage.setTitle("Choose Metric Wanted ");
+				secGrid.setHgap(2);
+				secGrid.setVgap(3);
+				
+				chooseMetrics();
+				chooseLimits();
+				logicOperator();
+				exitButtons();
+				
+				secondaryStage.setScene(secondScene);
+				secondaryStage.sizeToScene();
+				secondaryStage.show();
+			}
+		});
 	}
 	
 	public static void main(String[] args) {
