@@ -36,21 +36,25 @@ public class Metrics {
 	 * 
 	 * @return for now just an array with two integers like so: [numberOfLinesClass, numberOfMethodsClass] 
 	 * 
-	 * @throws Exception in case it can't open the file 
+	 * @throws Exception in case it can't open one of the files 
 	 */
 
 	public boolean getMetrics(String Path) {
 
 		try {
 			
+			//Get Name For The XLSX File
+			String[] pathHelp = Path.split("\\\\");
+			String xlsxFileName = pathHelp[pathHelp.length -1];
+			
 			//Create XLSX File
 			 XSSFWorkbook workbook = new XSSFWorkbook(); 
 	         
-		     XSSFSheet sheet = workbook.createSheet("Dummy");		     
+		     XSSFSheet sheet = workbook.createSheet(xlsxFileName);		     
 		     //Create Firsts Row
 		     Row row = sheet.createRow(0);
 		     
-		     //Create titles to add to first row
+		     //Create Titles To Add To First Row
 		     String [] titles = new String[11];
 		     titles[0] = "MethodID";
 		     titles[1] = "Package";
@@ -64,7 +68,7 @@ public class Metrics {
 		     titles[9] = "CYCLO_Method";
 		     titles[10] = "is_Long_Method";
 		     
-		     //Setting normal font
+		     //Setting Normal Font
 		     XSSFFont defaultFont = workbook.createFont();
 		     defaultFont.setFontHeightInPoints((short)10);
 		     defaultFont.setFontName("Arial");
@@ -72,7 +76,7 @@ public class Metrics {
 		     defaultFont.setBold(false);
 		     defaultFont.setItalic(false);
 		     
-		     //Titles font
+		     //Titles Font
 		     XSSFCellStyle style = workbook.createCellStyle();
 		     
 		     XSSFFont font = workbook.createFont();
@@ -82,7 +86,7 @@ public class Metrics {
 		     
 		     style.setFont(font);       
 		     
- 		     //Add Titles to row
+ 		     //Add Titles To Row
 		     for(int i = 0; i < titles.length; i++) {
 		    	 
 		    	Cell cell = row.createCell(i);
@@ -93,7 +97,7 @@ public class Metrics {
 
 		     }
 		     
-		    //Create File with the original PATH and call decomposePackages to get all the classes and the number of packages
+		    //Create File With The Original Path And Call decomposePackages To Get All The Classes And The Number Of Packages
 			File fileOrigins = new File(Path);
 			decomposePackages(fileOrigins);
 			ArrayList<File> files = getFiles();
@@ -104,7 +108,7 @@ public class Metrics {
 				//Open Class File 
 				BufferedReader file = new BufferedReader(new FileReader(files.get(i)));
 
-				//Declaring initial values for variables
+				//Declaring Initial Values For Variables
 				String line;
 				String className;
 				String methodName = "";
@@ -112,48 +116,46 @@ public class Metrics {
 				int numberOfLinesClass = 0; // Increment every new line in the class
 				int numberOfMethodsClass = 0; //Increment every time we enter a new method in the class
 				int numberOfLinesMethod = 0; //Increment every new line till end of method
-				int numberOfLoops = 0; //Increment every time there is a for or while loop in the method
-				
-
-				ArrayList<Integer> methodsCyclomatic = new ArrayList<Integer>();
+				int numberOfBranches = 1; //Increment every time there is a for or while loop in the method
+				int numberOfBranchesClass = 0;
 
 				//Inner Class Loop
 				while((line = file.readLine()) != null) {
 
-					if(!line.trim().isEmpty() && !line.contains("//") && !line.contains("package") && !line.contains("import")) { // Checks if it is a valid line i.e. is not an import or package statement and is not a comment or empty line
+					if(!line.trim().isEmpty() && !line.contains("//") && !line.contains("package") && !line.contains("import")) { // Checks If It Is A Valid Line i.e. Is Not An Import Or Package Statement And Is Not A Comment Or Empty Line
 
-						//Gets the class name
+						//Gets The Class Name
 						if(numberOfLinesClass == 0) {
 
 							className = getClassName(line);
 							
 						}
 
-						//Increments the LOC_Class metric
+						//Increments The LOC_Class Metric
 						numberOfLinesClass++;
 						
-						//Increments the LOC_Method metric
+						//Increments The LOC_Method Metric
 						if(numberOfLinesClass > 1){
 						
 							numberOfLinesMethod++;
 						
 						}
 						
-						//Increments the CYCLO_Method metric
-						if(line.trim().startsWith("for") || line.trim().startsWith("while")){ // if line has a for or a while 
+						//Increments The CYCLO_Method Metric
+						if(line.trim().startsWith("for") || line.trim().startsWith("while") || line.trim().startsWith("if") || line.trim().startsWith("case") ){ // if line has a for or a while 
 						
-							numberOfLoops++;
+							numberOfBranches++;
 						
 						}
 						
-						//If it is a new method gets its name resets method metrics, increments NOM_Class metric and total number of methods metrics, also puts the CYCLO_Method metric in an array list for further use
+						//If It Is A New Method Gets Its Name Resets Method Metrics, Increments NOM_Class Metric And Total Number Of Methods Metric, Also Puts The CYCLO_Method Metric In An Array List For Further Use And Increments WMC_Method By CYCLO_Method
 						if(isMethod(line)) {
 							
 							methodName = getMethodName(line);
 							numberOfLinesMethod = 0;
 							numberOfMethodsClass++;
-							methodsCyclomatic.add(numberOfLoops);
-							numberOfLoops = 0;
+							numberOfBranchesClass += numberOfBranches;
+							numberOfBranches = 1;
 							setNumberOfMethods(getNumberOfMethods() + 1);
 							
 							//Print method info to xlsx file
@@ -162,19 +164,13 @@ public class Metrics {
 					}
 				}
 				
-				//Adds the last methods CYCLO_Metod metric to the list
-				methodsCyclomatic.add(numberOfLoops);
-				
-				//Gets the max in the CYCLO_Method list to define WMC_Class metric
-				int numberOfLoopsClass = Collections.max(methodsCyclomatic);
-				
-				//Increment NUmber of total classes by 1 and number of total lines of code by LOC_Class
+				//Increment NUmber Of Total Classes By 1 And Number Of Total Lines Of Code By LOC_Class
 				setNumberOfClasses(getNumberOfClasses() + 1);
 				setNumberOfLines(getNumberOfLines() + numberOfLinesClass);
 
 				file.close();
 				
-				//auto sizing every column
+				//Auto Sizing Every Column
 				sheet.autoSizeColumn(0);
 				sheet.autoSizeColumn(1);
 				sheet.autoSizeColumn(2);
@@ -188,8 +184,8 @@ public class Metrics {
 				sheet.autoSizeColumn(10);
 				
 				
-				//Write the workbook in file system
-	            FileOutputStream out = new FileOutputStream(new File("Dummy.xlsx"));
+				//Write The Workbook In XLSX File
+	            FileOutputStream out = new FileOutputStream(new File(xlsxFileName + ".xlx"));
 	            workbook.write(out);
 	            out.close();
 
@@ -198,12 +194,9 @@ public class Metrics {
 		}catch(Exception e){
 
 			e.printStackTrace();
-
+			throw new IllegalArgumentException();
+			
 		}
-		//1-Open files from path
-		//If path is empty throw exception(Return false) failure
-		//2-Loop to parse each packages
-		//3-Loop to parse each file in the packages
 
 		return true;
 	}
