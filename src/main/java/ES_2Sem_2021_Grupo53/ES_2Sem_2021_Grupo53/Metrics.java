@@ -101,16 +101,22 @@ public class Metrics {
 			File fileOrigins = new File(Path);
 			decomposePackages(fileOrigins);
 			ArrayList<File> files = getFiles();
+			
+			int methodID = 1;
 
 			//Outer Class Loop
 			for(int i = 0; i < files.size(); i++) {
+				
+				//get file package
+				String[] pathHelper = Path.split("\\\\");
+				String packageName = pathHelper[pathHelper.length -1];
 
 				//Open Class File 
 				BufferedReader file = new BufferedReader(new FileReader(files.get(i)));
 
 				//Declaring Initial Values For Variables
 				String line;
-				String className;
+				String className = "";
 				String methodName = "";
 
 				int numberOfLinesClass = 0; // Increment every new line in the class
@@ -151,6 +157,43 @@ public class Metrics {
 						//If It Is A New Method Gets Its Name Resets Method Metrics, Increments NOM_Class Metric And Total Number Of Methods Metric, Also Puts The CYCLO_Method Metric In An Array List For Further Use And Increments WMC_Method By CYCLO_Method
 						if(isMethod(line)) {
 							
+							if(!methodName.equals("")) {
+								
+								//Write To File
+								Row tempRow = sheet.createRow(methodID);
+							
+								//Write Method ID
+								Cell cell = tempRow.createCell(0);
+					     		cell.setCellValue(methodID);
+					     	
+					     		//Write Package Name
+					     		cell = tempRow.createCell(1);
+					     		cell.setCellValue(packageName);
+					     	
+					     		//Write Class Name
+					     		cell = tempRow.createCell(2);
+					     		cell.setCellValue(className);
+					     	
+					     		//Write Method Name
+					     		cell = tempRow.createCell(3);
+					     		cell.setCellValue(methodName);
+					     	
+					     		//LOC_Method
+					     		cell = tempRow.createCell(8);
+					     		cell.setCellValue(numberOfLinesMethod);
+					     		
+					     		//CYCLO_Method
+					     		cell = tempRow.createCell(9);
+					     		cell.setCellValue(numberOfBranches);
+					     	
+					     		//is_Long_Method
+					     		cell = tempRow.createCell(10);
+					     		cell.setCellValue("FALSE");
+						
+					     		methodID++;
+							
+							}
+							
 							methodName = getMethodName(line);
 							numberOfLinesMethod = 0;
 							numberOfMethodsClass++;
@@ -158,11 +201,45 @@ public class Metrics {
 							numberOfBranches = 1;
 							setNumberOfMethods(getNumberOfMethods() + 1);
 							
-							//Print method info to xlsx file
 						}			
 																		
 					}
 				}
+				
+				//Add Last Method
+				
+				//Write To File
+				Row tempRow = sheet.createRow(methodID);
+				
+				//Write Method ID
+				Cell cell = tempRow.createCell(0);
+		     	cell.setCellValue(methodID);
+		     	
+		     	//Write Package Name
+		     	cell = tempRow.createCell(1);
+		     	cell.setCellValue(packageName);
+		     	
+		     	//Write Class Name
+		     	cell = tempRow.createCell(2);
+		     	cell.setCellValue(className);
+		     	
+		     	//Write Method Name
+		     	cell = tempRow.createCell(3);
+		     	cell.setCellValue(methodName);
+		     	
+		     	//LOC_Method
+		     	cell = tempRow.createCell(8);
+		     	cell.setCellValue(numberOfLinesMethod);
+		     	
+		     	//CYCLO_Method
+		     	cell = tempRow.createCell(9);
+		     	cell.setCellValue(numberOfBranches);
+		     	
+		     	//is_Long_Method
+		     	cell = tempRow.createCell(10);
+		     	cell.setCellValue("FALSE");
+		    						
+				methodID++;
 				
 				//Increment NUmber Of Total Classes By 1 And Number Of Total Lines Of Code By LOC_Class
 				setNumberOfClasses(getNumberOfClasses() + 1);
@@ -185,7 +262,7 @@ public class Metrics {
 				
 				
 				//Write The Workbook In XLSX File
-	            FileOutputStream out = new FileOutputStream(new File(xlsxFileName + ".xlx"));
+	            FileOutputStream out = new FileOutputStream(new File(xlsxFileName + ".xlsx"));
 	            workbook.write(out);
 	            out.close();
 
