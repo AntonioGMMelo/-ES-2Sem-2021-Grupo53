@@ -29,14 +29,17 @@ public class Metrics {
 	 * 
 	 * Extracts The number of packages and classes and methods and total number of lines in a folder indicated by the user,
 	 * as well as for each class the number of lines, number of methods and the cyclomatic complexity
-	 * (how many loops are in the method with the most loops in that class) of the class furthermore,
-	 * it extracts for each method the number of lines of code and the cyclomatic complexity(number of loops).
+	 * (how many branches ( 1 + ifs, whiles, fors, and cases ) are in all the methods in that class) of the class furthermore,
+	 * it extracts for each method the number of lines of code and the cyclomatic complexity(number of branches).
+	 * Finally it prints each method entry with the metrics following the template described bellow to a xlsx file:
+	 * 
+	 * MethodID(Auto Increment) | Package Name | Class Name ! Method Name | LOC_Class | NOM_CLass | WMC_CLass | is_God_Class | LOC_Method | CYCLO_Method ! is_Long_Method
 	 * 
 	 * @param Path(Path of the folder to analyse)
 	 * 
-	 * @return for now just an array with two integers like so: [numberOfLinesClass, numberOfMethodsClass] 
+	 * @return Boolean true for successful operation
 	 * 
-	 * @throws Exception in case it can't open one of the files 
+	 * @throws IllegalArgumentException in case it can't open one of the files 
 	 */
 
 	public boolean getMetrics(String Path) {
