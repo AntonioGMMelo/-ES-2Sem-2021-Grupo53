@@ -265,7 +265,7 @@ public class Metrics {
 				
 				
 				//Write The Workbook In XLSX File
-	            FileOutputStream out = new FileOutputStream(new File(xlsxFileName + ".xlsx"));
+	            FileOutputStream out = new FileOutputStream(new File(xlsxFileName + "_metrics.xlsx"));
 	            workbook.write(out);
 	            out.close();
 
