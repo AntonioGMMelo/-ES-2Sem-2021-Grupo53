@@ -399,6 +399,11 @@ public class Metrics {
 		}
 
 	}
+	
+	/*
+	 * A funnção par detectar os code_smells recebera tres listas como argumentos uma com as proprias metricaas extraidas outra com as 
+	 * operoções logicas AND ou OR (STrings) e a lista com os treshholds e tem que devoler true se for um code smlel e false se não
+	 * */
 
 	public int getNumberOfPackages() {
 
