@@ -372,8 +372,8 @@ public class Metrics {
 	/**
 	 * Takes the path and counts the number of packages and puts every file in an Array 
 	 * 
-	 * This method counts every package in the given path and puts every file(class) in an array of 
-	 * files for metric extraction
+	 * This method counts every package in the given path and puts every file(.java) in an array of 
+	 * files for metric extraction.
 	 * 
 	 * @param path (Sting)
 	 */
@@ -392,8 +392,9 @@ public class Metrics {
 
 			} else {
 
-				getFiles().add(fileEntry);
-
+				if(fileEntry.getName().endsWith(".java")) {
+					getFiles().add(fileEntry);
+				}
 			}
 
 		}
