@@ -2,7 +2,6 @@ package ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

@@ -1,8 +1,6 @@
 package ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import org.junit.Test;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -268,6 +266,7 @@ public class Metrics {
 	            FileOutputStream out = new FileOutputStream(new File(xlsxFileName + "_metrics.xlsx"));
 	            workbook.write(out);
 	            out.close();
+	            workbook.close();
 
 			}
 

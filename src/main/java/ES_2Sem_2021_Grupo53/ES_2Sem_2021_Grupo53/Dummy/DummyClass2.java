@@ -75,4 +75,14 @@ public class DummyClass2 {
 	
 	}
 	
+
+	public static void main(String[] args) {
+		
+		dummyTiny();
+		dummySpace();
+		dummyMedium();
+		dummyLong();
+		
+	}
+	
 }

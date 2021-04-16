@@ -39,5 +39,14 @@ public class DummyClass{
 					System.out.println(indexk);
 
 	}
+	
+	public static void main(String[] args) {
+		
+		noLoop();
+		oneLoop();
+		twoLoop();
+		threeLoop();
+		
+	}
 
 }
