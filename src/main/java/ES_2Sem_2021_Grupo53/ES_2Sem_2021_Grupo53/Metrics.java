@@ -248,6 +248,26 @@ public class Metrics {
 
 				file.close();
 				
+				int index = 0;
+				
+				while(sheet.getRow(index) != null ) {
+					
+					if(sheet.getRow(index).getCell(2).getStringCellValue().equals(className)) {
+						
+						sheet.getRow(index).createCell(4).setCellValue(numberOfLinesClass);
+						
+						sheet.getRow(index).createCell(5).setCellValue(numberOfMethodsClass);
+						
+						sheet.getRow(index).createCell(6).setCellValue(numberOfBranchesClass);
+						
+						sheet.getRow(index).createCell(7).setCellValue("FASLE");
+						
+					}
+					
+					index++;
+					
+				}
+				
 				//Auto Sizing Every Column
 				sheet.autoSizeColumn(0);
 				sheet.autoSizeColumn(1);
@@ -266,7 +286,6 @@ public class Metrics {
 	            FileOutputStream out = new FileOutputStream(new File(xlsxFileName + "_metrics.xlsx"));
 	            workbook.write(out);
 	            out.close();
-	            workbook.close();
 
 			}
 
