@@ -40,8 +40,8 @@ public class Metrics {
 	 * @throws IllegalArgumentException in case it can't open one of the files 
 	 */
 
-	public boolean getMetrics(String Path) {
-
+	public boolean getMetrics(String Path, ArrayList<String> orderOfMethods, ArrayList<String> logicMethods, ArrayList<Integer> thresholdsMethods, ArrayList<String> orderOfClass, ArrayList<String> logicClass, ArrayList<Integer> thresholdsClass) {
+ 
 		try {
 			
 			//Get Name For The XLSX File
@@ -125,6 +125,8 @@ public class Metrics {
 				int numberOfLinesMethod = 0; //Increment every new line till end of method
 				int numberOfBranches = 1; //Increment every time there is a for or while loop in the method
 				int numberOfBranchesClass = 0;
+				
+				ArrayList<Integer> metrics = new ArrayList<Integer>();;
 
 				//Inner Class Loop
 				while((line = file.readLine()) != null) {
@@ -187,9 +189,28 @@ public class Metrics {
 					     		cell = tempRow.createCell(9);
 					     		cell.setCellValue(numberOfBranches);
 					     	
+					     		//Check is_Long_Method
+					     		metrics = new ArrayList<Integer>();
+					     		
+					     		for(String s : orderOfMethods) {
+					     			
+					     			switch(s){
+					     			
+					     			case "LOC_Method":
+					     				metrics.add(numberOfLinesMethod);
+					     				break;
+					     			
+					     			case "CYCLO_Method":
+					     				metrics.add(numberOfBranches);
+					     				break;
+					     				
+					     			}
+					     			
+					     		}
+					     		
 					     		//is_Long_Method
 					     		cell = tempRow.createCell(10);
-					     		cell.setCellValue("FALSE"); // isCodeSmell
+					     		cell.setCellValue(isCodeSmell(metrics, logicMethods, thresholdsMethods)); // isCodeSmell
 						
 					     		methodID++;
 							
@@ -236,9 +257,28 @@ public class Metrics {
 		     	cell = tempRow.createCell(9);
 		     	cell.setCellValue(numberOfBranches);
 		     	
+		     	//Check is_Long_Method
+	     		metrics = new ArrayList<Integer>();
+	     		
+	     		for(String s : orderOfMethods) {
+	     			
+	     			switch(s){
+	     			
+	     			case "LOC_Method":
+	     				metrics.add(numberOfLinesMethod);
+	     				break;
+	     			
+	     			case "CYCLO_Method":
+	     				metrics.add(numberOfBranches);
+	     				break;
+	     				
+	     			}
+	     			
+	     		}
+		     	
 		     	//is_Long_Method
 		     	cell = tempRow.createCell(10);
-		     	cell.setCellValue("FALSE"); // isCodeSmell
+		     	cell.setCellValue(isCodeSmell(metrics, logicMethods, thresholdsMethods)); // isCodeSmell
 		    						
 				methodID++;
 				
@@ -247,6 +287,29 @@ public class Metrics {
 				setNumberOfLines(getNumberOfLines() + numberOfLinesClass);
 
 				file.close();
+				
+				metrics = new ArrayList<Integer>();
+				
+				for(String s : orderOfClass) {
+	     			
+	     			switch(s){
+	     			
+	     			case "LOC_Class":
+	     				metrics.add(numberOfLinesClass);
+	     				break;
+	     			
+	     			case "NOM_Class":
+	     				metrics.add(numberOfMethodsClass);
+	     				break;
+	     				
+	     			case "WMC_Class":
+	     				metrics.add(numberOfBranchesClass);
+	     				break;	
+	     				
+	     			}
+	     			
+	     		}
+				
 				
 				int index = 0;
 				
@@ -260,7 +323,7 @@ public class Metrics {
 						
 						sheet.getRow(index).createCell(6).setCellValue(numberOfBranchesClass);
 						
-						sheet.getRow(index).createCell(7).setCellValue("FALSE"); // isCodeSmell
+						sheet.getRow(index).createCell(7).setCellValue(isCodeSmell(metrics, logicClass, thresholdsClass)); // isCodeSmell
 						
 					}
 					
@@ -399,6 +462,7 @@ public class Metrics {
 	
 	public boolean isCodeSmell(ArrayList<Integer> allMetrics, ArrayList<String> logicOp, ArrayList<Integer> thresholds){ 
 		ArrayList<Boolean> metricsResult = new ArrayList<Boolean>();		
+		
 		boolean result = true;
 		boolean helper = true;
 		String logicOperation = "";

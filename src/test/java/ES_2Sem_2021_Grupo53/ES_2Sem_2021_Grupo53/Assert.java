@@ -11,8 +11,8 @@ public class Assert {
 	@Test
 	public void testAssertion(){
 		
-		String PATH = "C:\\Users\\migue\\eclipse-workspace\\ES_2020\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy";
-		
+		String PATH = "C:\\Users\\ant\\eclipse-workspace\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy";
+	
 		//isCodeSmell
 		ArrayList<Integer> allMetricsExample = new ArrayList<Integer>();
 		allMetricsExample.add(10);
@@ -33,7 +33,32 @@ public class Assert {
 		assertFalse(answer2);
 		
 		//For getMetrics
-		boolean answer1 = new Metrics().getMetrics(PATH);
+		ArrayList<String> orderOfMethods = new ArrayList<String>();
+		orderOfMethods.add("LOC_Method");
+		orderOfMethods.add("CYCLO_Method");
+		
+		ArrayList<String> logicMethods = new ArrayList<String>();
+		logicMethods.add("AND");
+		
+		ArrayList<Integer> thresholdsMethods= new ArrayList<Integer>();
+		thresholdsMethods.add(4);
+		thresholdsMethods.add(2);
+		
+		ArrayList<String> orderOfClass = new ArrayList<String>();
+		orderOfClass.add("WMC_Class");
+		orderOfClass.add("NOM_Class");
+		orderOfClass.add("LOC_Class");
+		
+		ArrayList<String> logicClass = new ArrayList<String>();
+		logicClass.add("OR");
+		logicClass.add("OR");
+		
+		ArrayList<Integer> thresholdsClass = new ArrayList<Integer>();
+		thresholdsClass.add(10000);
+		thresholdsClass.add(1000);
+		thresholdsClass.add(10);
+		
+		boolean answer1 = new Metrics().getMetrics(PATH, orderOfMethods, logicMethods, thresholdsMethods, orderOfClass, logicClass, thresholdsClass);
 
 		assertTrue(answer1);
 		
