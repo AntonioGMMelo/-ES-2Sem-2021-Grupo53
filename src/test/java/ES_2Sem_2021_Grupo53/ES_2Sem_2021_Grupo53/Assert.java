@@ -4,18 +4,39 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.ArrayList;
 
 public class Assert {
 
 	@Test
 	public void testAssertion(){
 		
-		String PATH = "C:\\Users\\ant\\eclipse-workspace\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy";
+		String PATH = "C:\\Users\\migue\\eclipse-workspace\\ES_2020\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy";
+		
+		//isCodeSmell
+		ArrayList<Integer> allMetricsExample = new ArrayList<Integer>();
+		allMetricsExample.add(10);
+		allMetricsExample.add(15);
+		allMetricsExample.add(20);
+		
+		ArrayList<Integer> thresholdsExample = new ArrayList<Integer>();
+		thresholdsExample.add(10);
+		thresholdsExample.add(14);
+		thresholdsExample.add(21);
+		
+		ArrayList<String> logicOpExample = new ArrayList<String>();
+		logicOpExample.add("AND");
+		logicOpExample.add("OR");
+		
+		boolean answer2 = new Metrics().isCodeSmell(allMetricsExample, logicOpExample, thresholdsExample);
+		
+		assertFalse(answer2);
 		
 		//For getMetrics
 		boolean answer1 = new Metrics().getMetrics(PATH);
 
 		assertTrue(answer1);
+		
 		
 		//getClassName
 		

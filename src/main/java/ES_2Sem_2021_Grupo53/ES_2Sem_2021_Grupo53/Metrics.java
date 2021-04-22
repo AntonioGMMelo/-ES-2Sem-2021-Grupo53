@@ -189,7 +189,7 @@ public class Metrics {
 					     	
 					     		//is_Long_Method
 					     		cell = tempRow.createCell(10);
-					     		cell.setCellValue("FALSE");
+					     		cell.setCellValue("FALSE"); // isCodeSmell
 						
 					     		methodID++;
 							
@@ -238,11 +238,11 @@ public class Metrics {
 		     	
 		     	//is_Long_Method
 		     	cell = tempRow.createCell(10);
-		     	cell.setCellValue("FALSE");
+		     	cell.setCellValue("FALSE"); // isCodeSmell
 		    						
 				methodID++;
 				
-				//Increment NUmber Of Total Classes By 1 And Number Of Total Lines Of Code By LOC_Class
+				//Increment Number Of Total Classes By 1 And Number Of Total Lines Of Code By LOC_Class
 				setNumberOfClasses(getNumberOfClasses() + 1);
 				setNumberOfLines(getNumberOfLines() + numberOfLinesClass);
 
@@ -260,7 +260,7 @@ public class Metrics {
 						
 						sheet.getRow(index).createCell(6).setCellValue(numberOfBranchesClass);
 						
-						sheet.getRow(index).createCell(7).setCellValue("FASLE");
+						sheet.getRow(index).createCell(7).setCellValue("FALSE"); // isCodeSmell
 						
 					}
 					
@@ -386,6 +386,60 @@ public class Metrics {
 		}
 
 	}
+	
+	/*
+	 * Method that determines whether it is a code smell or not
+	 * 
+	 * First checks all the values referred to the metrics extracted and compares them with the thresholds from the user and outputs it to the list of booleans.
+	 * Then, using the boolean list formed previously and the list of logic operations from the user, makes all the logic operations to each boolean in the list and outputs it as a single boolean.
+	 * 
+	 * @param list of all metrics extracted (value), list of all the logic operations inputed by the user, list of all the limit values (thresholds)
+	 * @return boolean true if it is a code smell and false if it is not
+	 */
+	
+	public boolean isCodeSmell(ArrayList<Integer> allMetrics, ArrayList<String> logicOp, ArrayList<Integer> thresholds){ 
+		ArrayList<Boolean> metricsResult = new ArrayList<Boolean>();		
+		boolean result = true;
+		boolean helper = true;
+		String logicOperation = "";
+		
+		for(int i = 0; i < thresholds.size(); i++){
+			if(allMetrics.get(i) <= thresholds.get(i))
+				metricsResult.add(i, false);
+			else
+				metricsResult.add(i, true);
+		}
+		
+		for(int j = 0; j < metricsResult.size(); j++){
+			if(j == 0){
+				result = metricsResult.get(0);
+				logicOperation = logicOp.get(0);
+			}
+			if(j == metricsResult.size() - 1){
+				helper = metricsResult.get(j);
+				if(logicOperation.equals("AND")){
+					result = result && helper;
+				}
+				else{
+					result = result || helper;
+				}
+			}
+			else{
+				helper = metricsResult.get(j);
+				switch(logicOperation){
+					case "AND":
+						result = result && helper;
+						break;
+					case "OR":
+						result = result || helper;
+						break;					
+				}
+				logicOperation = logicOp.get(j);
+			}		
+		}
+		
+		return result;
+	}
 
 	/**
 	 * Takes the path and counts the number of packages and puts every file in an Array 
@@ -418,11 +472,6 @@ public class Metrics {
 		}
 
 	}
-	
-	/*
-	 * A funnção par detectar os code_smells recebera tres listas como argumentos uma com as proprias metricaas extraidas outra com as 
-	 * operoções logicas AND ou OR (STrings) e a lista com os treshholds e tem que devoler true se for um code smlel e false se não
-	 * */
 
 	public int getNumberOfPackages() {
 
