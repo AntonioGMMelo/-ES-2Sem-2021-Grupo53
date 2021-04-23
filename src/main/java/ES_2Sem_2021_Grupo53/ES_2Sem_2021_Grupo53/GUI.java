@@ -30,6 +30,7 @@ public class GUI extends Application{
 		primaryStage.getIcons().add(new Image(GUI.class.getResourceAsStream( "icon.png")));
 		primaryStage.setTitle("Code Smells");
 		
+		//TESTE
 		
 		grid.setHgap(10);
 		grid.setVgap(10);
