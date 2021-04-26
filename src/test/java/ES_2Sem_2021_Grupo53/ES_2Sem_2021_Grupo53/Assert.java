@@ -1,9 +1,13 @@
 package ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53;
 
 import org.junit.Test;
+
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.File;
 import java.util.ArrayList;
 
 public class Assert {
@@ -104,6 +108,13 @@ public class Assert {
 		assertEquals("methodName", result13);
 		assertEquals("methodName", result14);
 		assertEquals("methodName", result15);
+		
+		File theoretical = new File("C:\\Users\\ant\\eclipse-workspace\\ES-2Sem-2021-Grupo53\\Dummy_metricsTest.xlsx");
+		File practical = new File("C:\\Users\\ant\\eclipse-workspace\\ES-2Sem-2021-Grupo53\\Dummy_metrics.xlsx");
+		
+		int[] result16 = new Metrics().compare(theoretical, practical);
+		
+		assertArrayEquals(new int[] {0,4,0,8}, result16);
 		
 	}
 	

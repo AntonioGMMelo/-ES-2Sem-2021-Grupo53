@@ -1,9 +1,12 @@
 package ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.BufferedReader;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -51,7 +54,8 @@ public class Metrics {
 			//Create XLSX File
 			 XSSFWorkbook workbook = new XSSFWorkbook(); 
 	         
-		     XSSFSheet sheet = workbook.createSheet(xlsxFileName);		     
+		     XSSFSheet sheet = workbook.createSheet(xlsxFileName);	
+		     
 		     //Create Firsts Row
 		     Row row = sheet.createRow(0);
 		     
@@ -535,6 +539,94 @@ public class Metrics {
 
 		}
 
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int[] compare(File theoretical, File practical) {
+		
+		int[] answers = new int[4]; 
+		int FP = 0, TP = 0, FN = 0, TN = 0;
+		FileInputStream fisical1 = null;
+		FileInputStream fisical2 = null; 
+		
+		try {
+			
+			fisical1 = new FileInputStream(theoretical);
+			fisical2 = new FileInputStream(practical);
+		
+			XSSFWorkbook theoreticalWorkBook = new XSSFWorkbook (fisical1);
+			XSSFWorkbook practicalWorkBook = new XSSFWorkbook (fisical2);
+			
+			XSSFSheet theoreticalSheet = theoreticalWorkBook.getSheetAt(0);
+			XSSFSheet practicalSheet = practicalWorkBook.getSheetAt(0);
+			
+			Iterator<Row> rowIterator = theoreticalSheet.iterator(); 	
+			Iterator<Row> rowIterator2 = practicalSheet.iterator();
+			
+			while (rowIterator.hasNext() && rowIterator2.hasNext()) {
+			
+				String className = "";
+					
+				Row row = rowIterator.next();
+				Row row2 = rowIterator2.next();
+				
+				if(!row.getCell(2).getStringCellValue().equals(className) && row.getCell(7).getCellType() != row.getCell(2).getCellType()){
+					
+					if(row.getCell(7).getBooleanCellValue() == row2.getCell(7).getBooleanCellValue() && row.getCell(7).getBooleanCellValue() == true) TP++;
+					
+					else if(row.getCell(7).getBooleanCellValue() == row2.getCell(7).getBooleanCellValue() && row.getCell(7).getBooleanCellValue() == false) TN++;
+
+					else if(!row.getCell(7).getBooleanCellValue() == row2.getCell(7).getBooleanCellValue() && row2.getCell(7).getBooleanCellValue() == true) FP++;
+					
+					else if(!row.getCell(7).getBooleanCellValue() == row2.getCell(7).getBooleanCellValue() && row2.getCell(7).getBooleanCellValue() == false) FN++;
+						
+					className = row.getCell(2).getStringCellValue();
+					
+				}
+				
+				if(row.getCell(7).getCellType() != row.getCell(2).getCellType()) {
+				
+					if(row.getCell(10).getBooleanCellValue() == row2.getCell(10).getBooleanCellValue() && row.getCell(10).getBooleanCellValue() == true) TP++;
+				
+					else if(row.getCell(10).getBooleanCellValue() == row2.getCell(10).getBooleanCellValue() && row.getCell(10).getBooleanCellValue() == false) TN++;
+
+					else if(!row.getCell(10).getBooleanCellValue() == row2.getCell(10).getBooleanCellValue() && row2.getCell(10).getBooleanCellValue() == true) FP++;
+				
+					else if(!row.getCell(10).getBooleanCellValue() == row2.getCell(10).getBooleanCellValue() && row2.getCell(10).getBooleanCellValue() == false) FN++;
+				
+				}
+				
+			}
+			
+		}catch(Exception e){
+			
+			e.printStackTrace();
+		
+		}finally{
+			
+			try {
+				
+				fisical1.close();
+				fisical2.close();
+			
+			}catch (IOException e) {
+				
+				e.printStackTrace();
+			
+			}
+			
+		}
+		
+		answers[0] = FP;
+		answers[1] = TP;
+		answers[2] = FN;
+		answers[3] = TN;
+		
+		return answers;
+		
 	}
 
 	public int getNumberOfPackages() {
