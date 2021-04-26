@@ -1,9 +1,12 @@
 package ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.BufferedReader;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -51,7 +54,8 @@ public class Metrics {
 			//Create XLSX File
 			 XSSFWorkbook workbook = new XSSFWorkbook(); 
 	         
-		     XSSFSheet sheet = workbook.createSheet(xlsxFileName);		     
+		     XSSFSheet sheet = workbook.createSheet(xlsxFileName);	
+		     
 		     //Create Firsts Row
 		     Row row = sheet.createRow(0);
 		     
@@ -371,7 +375,10 @@ public class Metrics {
 	 * WARNING does not check whether the line of code is a class so be careful passing lines of code to it
 	 * 
 	 * @param line (String to extract the class name from)
+	 * 
 	 * @return class name (String)
+	 * 
+	 * @throws Any exception that can occur while dealing with Strings
 	 */
 
 	public String getClassName(String line){
@@ -393,12 +400,15 @@ public class Metrics {
 	/**
 	 * A method that receives a line of code and returns the method name
 	 * 
-	 *  First it splits the string by "("  and takes the first item of the split string and splits it again this time by " " then it 
-	 * 	returns the last String in the new String[] without its last character to avoid the "(" that is split along with the method name.
-	 * 	WARNING it does not check whether line is a method so be careful with the arguments being passed to it .
+	 * First it splits the string by "("  and takes the first item of the split string and splits it again this time by " " then it 
+	 * returns the last String in the new String[] without its last character to avoid the "(" that is split along with the method name.
+	 * WARNING it does not check whether line is a method so be careful with the arguments being passed to it .
 	 * 
 	 * @param line(String line of code)
+	 * 
 	 * @return method name
+	 * 
+	 * @throws Any exception that can occur while dealing with Strings
 	 */
 
 	public String getMethodName(String line){
@@ -421,7 +431,10 @@ public class Metrics {
 	 * returns true and if it does not returns false.
 	 * 
 	 * @param line (String line of code)
+	 * 
 	 * @return boolean true if it is a Method and false if it is not
+	 * 
+	 * @throws Any exception that can occur while dealing with Strings
 	 */
 
 	public boolean isMethod(String line) {
@@ -450,14 +463,17 @@ public class Metrics {
 
 	}
 	
-	/*
+	/**
 	 * Method that determines whether it is a code smell or not
 	 * 
 	 * First checks all the values referred to the metrics extracted and compares them with the thresholds from the user and outputs it to the list of booleans.
 	 * Then, using the boolean list formed previously and the list of logic operations from the user, makes all the logic operations to each boolean in the list and outputs it as a single boolean.
 	 * 
 	 * @param list of all metrics extracted (value), list of all the logic operations inputed by the user, list of all the limit values (thresholds)
+	 * 
 	 * @return boolean true if it is a code smell and false if it is not
+	 * 
+	 * @throws Any exception that can occur while dealing with Arrays
 	 */
 	
 	public boolean isCodeSmell(ArrayList<Integer> allMetrics, ArrayList<String> logicOp, ArrayList<Integer> thresholds){ 
@@ -512,6 +528,8 @@ public class Metrics {
 	 * files for metric extraction.
 	 * 
 	 * @param path (Sting)
+	 * 
+	 * @throws Any exception that can occur while dealing with files
 	 */
 
 	public void decomposePackages(File path) {
@@ -535,6 +553,106 @@ public class Metrics {
 
 		}
 
+	}
+	
+	/**
+	 * Function that compares the expected values for code_smells versus the ones obtained from a given rule set
+	 * 
+	 * This function takes the expected existence or not of a code_smell in a class/method for each class/method in the theoretical xlsx file
+	 * and sub sequentially compares that to the value obtained on the practical file after running the method getMetrics with the data inputed by the user
+	 * as rules for the existence of code_smells and on the same package that was used to create the theoretical file.
+	 * In doing so it records the number of True/False Positives/Negatives in an array of integers for further usage,
+	 * namely informing the user to help decide weather the code_smell rule is good or not during the calibration process.
+	 * 
+	 * @param this function takes to xlsx files the one with the theoretical(expected values) and the one obtained by analysing the same package but wit the code_smell rules defined by the user.
+	 * 
+	 * @return An integer array in the following order number of  False Positives(FP), True Positives(TP),  False Negatives(FN) and True Negatives(TN).
+	 * 
+	 * @throws Any exception that can occur while dealing with files
+	 */
+	
+	public int[] compare(File theoretical, File practical) {
+		
+		int[] answers = new int[4]; 
+		int FP = 0, TP = 0, FN = 0, TN = 0;
+		FileInputStream fisical1 = null;
+		FileInputStream fisical2 = null; 
+		
+		try {
+			
+			fisical1 = new FileInputStream(theoretical);
+			fisical2 = new FileInputStream(practical);
+		
+			XSSFWorkbook theoreticalWorkBook = new XSSFWorkbook (fisical1);
+			XSSFWorkbook practicalWorkBook = new XSSFWorkbook (fisical2);
+			
+			XSSFSheet theoreticalSheet = theoreticalWorkBook.getSheetAt(0);
+			XSSFSheet practicalSheet = practicalWorkBook.getSheetAt(0);
+			
+			Iterator<Row> rowIterator = theoreticalSheet.iterator(); 	
+			Iterator<Row> rowIterator2 = practicalSheet.iterator();
+	
+			String className = "";
+			
+			while (rowIterator.hasNext() && rowIterator2.hasNext()) {
+					
+				Row row = rowIterator.next();
+				Row row2 = rowIterator2.next();
+				
+				if(!(row.getCell(2).getStringCellValue().equals(className)) && row.getCell(7).getCellType() != row.getCell(2).getCellType()) {
+					
+					className = row.getCell(2).getStringCellValue();
+					
+					if(row.getCell(7).getBooleanCellValue() == row2.getCell(7).getBooleanCellValue() && row.getCell(7).getBooleanCellValue() == true) TP++;
+					
+					else if(row.getCell(7).getBooleanCellValue() == row2.getCell(7).getBooleanCellValue() && row.getCell(7).getBooleanCellValue() == false) TN++;
+
+					else if(!row.getCell(7).getBooleanCellValue() == row2.getCell(7).getBooleanCellValue() && row2.getCell(7).getBooleanCellValue() == true) FP++;
+					
+					else if(!row.getCell(7).getBooleanCellValue() == row2.getCell(7).getBooleanCellValue() && row2.getCell(7).getBooleanCellValue() == false) FN++;
+					
+				}
+				
+				if(row.getCell(7).getCellType() != row.getCell(2).getCellType()) {
+				
+					if(row.getCell(10).getBooleanCellValue() == row2.getCell(10).getBooleanCellValue() && row.getCell(10).getBooleanCellValue() == true) TP++;
+				
+					else if(row.getCell(10).getBooleanCellValue() == row2.getCell(10).getBooleanCellValue() && row.getCell(10).getBooleanCellValue() == false) TN++;
+
+					else if(!row.getCell(10).getBooleanCellValue() == row2.getCell(10).getBooleanCellValue() && row2.getCell(10).getBooleanCellValue() == true) FP++;
+				
+					else if(!row.getCell(10).getBooleanCellValue() == row2.getCell(10).getBooleanCellValue() && row2.getCell(10).getBooleanCellValue() == false) FN++;
+				
+				}
+				
+			}
+			
+		}catch(Exception e){
+			
+			e.printStackTrace();
+		
+		}finally{
+			
+			try {
+				
+				fisical1.close();
+				fisical2.close();
+			
+			}catch (IOException e) {
+				
+				e.printStackTrace();
+			
+			}
+			
+		}
+		
+		answers[0] = FP;
+		answers[1] = TP;
+		answers[2] = FN;
+		answers[3] = TN;
+		
+		return answers;
+		
 	}
 
 	public int getNumberOfPackages() {
