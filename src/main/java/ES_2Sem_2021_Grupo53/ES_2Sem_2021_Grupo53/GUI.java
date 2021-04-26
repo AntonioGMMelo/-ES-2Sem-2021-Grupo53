@@ -123,9 +123,14 @@ public class GUI extends Application{
 		submmit.setOnAction(new EventHandler() {
 			@Override
 			public void handle(Event event) {
-				settingSecondStage();
+				secondaryStage.getIcons().add(new Image(GUI.class.getResourceAsStream( "icon2.png")));
+				secondaryStage.setTitle("Settings");
+				secGrid.setHgap(2);
+				secGrid.setVgap(3);
 				
-				
+				secondaryStage.setScene(secondScene);
+				secondaryStage.sizeToScene();
+				secondaryStage.show();				 
 			}
 		});
 	}
@@ -151,17 +156,7 @@ public class GUI extends Application{
 		
 	}
 
-		private void settingSecondStage() {
-		secondaryStage.getIcons().add(new Image(GUI.class.getResourceAsStream( "icon2.png")));
-		secondaryStage.setTitle("Settings");
-		secGrid.setHgap(2);
-		secGrid.setVgap(3);
 		
-		secondaryStage.setScene(secondScene);
-		secondaryStage.sizeToScene();
-		secondaryStage.show();
-	}
-
 		public static void main(String[] args) {
         launch(args);
     }
