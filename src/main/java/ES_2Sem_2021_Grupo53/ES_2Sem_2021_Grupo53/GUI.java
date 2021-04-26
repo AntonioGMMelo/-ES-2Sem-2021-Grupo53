@@ -33,6 +33,7 @@ public class GUI extends Application{
 	String secondMetric = "is_long_method";
 	
 	Button submmit;
+	Button pathButton;
 	
 	DirectoryChooser directaryChooser = new DirectoryChooser();
 	
@@ -119,7 +120,7 @@ public class GUI extends Application{
 	 * to work with :)
 	 * */
 	@SuppressWarnings("unchecked")
-	private void pathBttonAction() {
+	private void submmitButtonAction() {
 		submmit.setOnAction(new EventHandler() {
 			@Override
 			public void handle(Event event) {
@@ -128,9 +129,33 @@ public class GUI extends Application{
 				secGrid.setHgap(2);
 				secGrid.setVgap(3);
 				
+				TextArea area = new TextArea();
+				area.setEditable(true);
+				grid.add(area, 1, 1);
+				
+				TextField path = new TextField();
+				path.setEditable(true);
+				grid.add(path, 1,199);
+				
+				pathButton = new Button ("Your Path");
+				grid.add(path, 2, 199);
+				
 				secondaryStage.setScene(secondScene);
 				secondaryStage.sizeToScene();
 				secondaryStage.show();				 
+			}
+		});
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void pathButtonAction() {
+		pathButton.setOnAction(new EventHandler() {
+			@Override
+			public void handle(Event event) {
+				directaryChooser.setTitle("Open Resource Directory");
+				File selectedDirectory = directaryChooser.showDialog(secondaryStage);
+				String string = selectedDirectory.getAbsolutePath();
+				TextField pathField = new TextField(string);
 			}
 		});
 	}
