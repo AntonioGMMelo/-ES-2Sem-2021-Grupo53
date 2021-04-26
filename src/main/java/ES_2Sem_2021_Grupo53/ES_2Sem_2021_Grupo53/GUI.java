@@ -16,6 +16,7 @@ import javafx.scene.layout.*;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -33,7 +34,7 @@ public class GUI extends Application{
 	
 	Button submmit;
 	
-	
+	DirectoryChooser directaryChooser = new DirectoryChooser();
 	
 	/**
 	 * This method creates a combo box
@@ -108,7 +109,7 @@ public class GUI extends Application{
 	 * redirects the user to a second stage
 	 * where e'll be able to define path*/
 	private void submmitButton() {
-		submmit = new Button ("Submmit path");
+		submmit = new Button ("Submmit");
 		grid.add(submmit, 2, 8);
 	}
 	
@@ -124,10 +125,7 @@ public class GUI extends Application{
 			public void handle(Event event) {
 				settingSecondStage();
 				
-//				fileChooser.setTitle("Open Resource File");
-//				File file  = fileChooser.showOpenDialog(secondaryStage);
-//				String sf = file.getAbsolutePath();
-//				pathField.setText(sf);
+				
 			}
 		});
 	}
