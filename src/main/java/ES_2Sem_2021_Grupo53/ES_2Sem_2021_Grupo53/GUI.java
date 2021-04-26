@@ -24,11 +24,14 @@ public class GUI extends Application{
 	GridPane grid = new GridPane();
 	Scene scene = new Scene(grid, 300, 250);
 
+	Stage secondaryStage = new Stage();
+	GridPane secGrid = new GridPane();
+	Scene secondScene = new Scene(secGrid, 250, 200);
 	
 	String firstMetric = "is_god_class";
 	String secondMetric = "is_long_method";
 	
-	
+	Button submmit;
 	
 	
 	
@@ -100,6 +103,35 @@ public class GUI extends Application{
 		grid.add(otherMetric, 1, 7);
 	}
 	
+	/**
+	 * This method creates a button that 
+	 * redirects the user to a second stage
+	 * where e'll be able to define path*/
+	private void submmitButton() {
+		submmit = new Button ("Submmit path");
+		grid.add(submmit, 2, 8);
+	}
+	
+	/** This method redirects the user
+	 * to a new window where he will choose
+	 * the metrics, threshold and logic operator
+	 * to work with :)
+	 * */
+	@SuppressWarnings("unchecked")
+	private void pathBttonAction() {
+		submmit.setOnAction(new EventHandler() {
+			@Override
+			public void handle(Event event) {
+				settingSecondStage();
+				
+//				fileChooser.setTitle("Open Resource File");
+//				File file  = fileChooser.showOpenDialog(secondaryStage);
+//				String sf = file.getAbsolutePath();
+//				pathField.setText(sf);
+			}
+		});
+	}
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
@@ -114,13 +146,25 @@ public class GUI extends Application{
 		logicOperator();
 		otherLimit();
 		otherMetric();
+		submmitButton();
 				
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
 	}
 
-	public static void main(String[] args) {
+		private void settingSecondStage() {
+		secondaryStage.getIcons().add(new Image(GUI.class.getResourceAsStream( "icon2.png")));
+		secondaryStage.setTitle("Settings");
+		secGrid.setHgap(2);
+		secGrid.setVgap(3);
+		
+		secondaryStage.setScene(secondScene);
+		secondaryStage.sizeToScene();
+		secondaryStage.show();
+	}
+
+		public static void main(String[] args) {
         launch(args);
     }
 }
