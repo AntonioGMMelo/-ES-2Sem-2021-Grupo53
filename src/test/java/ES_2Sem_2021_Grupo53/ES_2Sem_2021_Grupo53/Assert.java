@@ -114,7 +114,7 @@ public class Assert {
 		
 		int[] result16 = new Metrics().compare(theoretical, practical);
 		
-		assertArrayEquals(new int[] {0,4,0,8}, result16);
+		assertArrayEquals(new int[] {1,3,1,7}, result16);
 		
 	}
 	

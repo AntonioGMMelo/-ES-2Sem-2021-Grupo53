@@ -375,7 +375,10 @@ public class Metrics {
 	 * WARNING does not check whether the line of code is a class so be careful passing lines of code to it
 	 * 
 	 * @param line (String to extract the class name from)
+	 * 
 	 * @return class name (String)
+	 * 
+	 * @throws Any exception that can occur while dealing with Strings
 	 */
 
 	public String getClassName(String line){
@@ -397,12 +400,15 @@ public class Metrics {
 	/**
 	 * A method that receives a line of code and returns the method name
 	 * 
-	 *  First it splits the string by "("  and takes the first item of the split string and splits it again this time by " " then it 
-	 * 	returns the last String in the new String[] without its last character to avoid the "(" that is split along with the method name.
-	 * 	WARNING it does not check whether line is a method so be careful with the arguments being passed to it .
+	 * First it splits the string by "("  and takes the first item of the split string and splits it again this time by " " then it 
+	 * returns the last String in the new String[] without its last character to avoid the "(" that is split along with the method name.
+	 * WARNING it does not check whether line is a method so be careful with the arguments being passed to it .
 	 * 
 	 * @param line(String line of code)
+	 * 
 	 * @return method name
+	 * 
+	 * @throws Any exception that can occur while dealing with Strings
 	 */
 
 	public String getMethodName(String line){
@@ -425,7 +431,10 @@ public class Metrics {
 	 * returns true and if it does not returns false.
 	 * 
 	 * @param line (String line of code)
+	 * 
 	 * @return boolean true if it is a Method and false if it is not
+	 * 
+	 * @throws Any exception that can occur while dealing with Strings
 	 */
 
 	public boolean isMethod(String line) {
@@ -454,14 +463,17 @@ public class Metrics {
 
 	}
 	
-	/*
+	/**
 	 * Method that determines whether it is a code smell or not
 	 * 
 	 * First checks all the values referred to the metrics extracted and compares them with the thresholds from the user and outputs it to the list of booleans.
 	 * Then, using the boolean list formed previously and the list of logic operations from the user, makes all the logic operations to each boolean in the list and outputs it as a single boolean.
 	 * 
 	 * @param list of all metrics extracted (value), list of all the logic operations inputed by the user, list of all the limit values (thresholds)
+	 * 
 	 * @return boolean true if it is a code smell and false if it is not
+	 * 
+	 * @throws Any exception that can occur while dealing with Arrays
 	 */
 	
 	public boolean isCodeSmell(ArrayList<Integer> allMetrics, ArrayList<String> logicOp, ArrayList<Integer> thresholds){ 
@@ -516,6 +528,8 @@ public class Metrics {
 	 * files for metric extraction.
 	 * 
 	 * @param path (Sting)
+	 * 
+	 * @throws Any exception that can occur while dealing with files
 	 */
 
 	public void decomposePackages(File path) {
@@ -542,9 +556,21 @@ public class Metrics {
 	}
 	
 	/**
+	 * Function that compares the expected values for code_smells versus the ones obtained from a given rule set
 	 * 
-	 * @return
+	 * This function takes the expected existence or not of a code_smell in a class/method for each class/method in the theoretical xlsx file
+	 * and sub sequentially compares that to the value obtained on the practical file after running the method getMetrics with the data inputed by the user
+	 * as rules for the existence of code_smells and on the same package that was used to create the theoretical file.
+	 * In doing so it records the number of True/False Positives/Negatives in an array of integers for further usage,
+	 * namely informing the user to help decide weather the code_smell rule is good or not during the calibration process.
+	 * 
+	 * @param this function takes to xlsx files the one with the theoretical(expected values) and the one obtained by analysing the same package but wit the code_smell rules defined by the user.
+	 * 
+	 * @return An integer array in the following order number of  False Positives(FP), True Positives(TP),  False Negatives(FN) and True Negatives(TN).
+	 * 
+	 * @throws Any exception that can occur while dealing with files
 	 */
+	
 	public int[] compare(File theoretical, File practical) {
 		
 		int[] answers = new int[4]; 
@@ -565,15 +591,17 @@ public class Metrics {
 			
 			Iterator<Row> rowIterator = theoreticalSheet.iterator(); 	
 			Iterator<Row> rowIterator2 = practicalSheet.iterator();
+	
+			String className = "";
 			
 			while (rowIterator.hasNext() && rowIterator2.hasNext()) {
-			
-				String className = "";
 					
 				Row row = rowIterator.next();
 				Row row2 = rowIterator2.next();
 				
-				if(!row.getCell(2).getStringCellValue().equals(className) && row.getCell(7).getCellType() != row.getCell(2).getCellType()){
+				if(!(row.getCell(2).getStringCellValue().equals(className)) && row.getCell(7).getCellType() != row.getCell(2).getCellType()) {
+					
+					className = row.getCell(2).getStringCellValue();
 					
 					if(row.getCell(7).getBooleanCellValue() == row2.getCell(7).getBooleanCellValue() && row.getCell(7).getBooleanCellValue() == true) TP++;
 					
@@ -582,8 +610,6 @@ public class Metrics {
 					else if(!row.getCell(7).getBooleanCellValue() == row2.getCell(7).getBooleanCellValue() && row2.getCell(7).getBooleanCellValue() == true) FP++;
 					
 					else if(!row.getCell(7).getBooleanCellValue() == row2.getCell(7).getBooleanCellValue() && row2.getCell(7).getBooleanCellValue() == false) FN++;
-						
-					className = row.getCell(2).getStringCellValue();
 					
 				}
 				
