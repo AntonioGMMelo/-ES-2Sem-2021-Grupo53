@@ -15,7 +15,7 @@ public class Assert {
 	@Test
 	public void testAssertion(){
 		
-		String PATH = "C:\\Users\\Maria\\Desktop\\3ºAno\\Engenharia de Software\\Projeto\\projetO\\ES-2Sem-2021-Grupo53\\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy";
+		String PATH = "C:\\Users\\Maria\\Desktop\\3ºAno\\Engenharia de Software\\Projeto\\projetO\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy";
 					//"C:\\Users\\ant\\eclipse-workspace\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy";
 	
 		//isCodeSmell

@@ -23,12 +23,7 @@ public class GUI extends Application{
 
 	GridPane grid = new GridPane();
 	Scene scene = new Scene(grid, 300, 250);
-	
-	Label metrics;
-	Label lOperator;
-	
-	ComboBox metriCB;
-	ComboBox cb1;
+
 	
 	String firstMetric = "is_god_class";
 	String secondMetric = "is_long_method";
@@ -46,8 +41,8 @@ public class GUI extends Application{
 	private void chooseMetrics() {
 		String[] metricList = {firstMetric, secondMetric};
 
-		metrics = new Label("Choose Metrics");
-		metriCB = new ComboBox(FXCollections.observableArrayList(metricList));
+		Label metrics = new Label("Choose Metrics");
+		ComboBox metriCB = new ComboBox(FXCollections.observableArrayList(metricList));
 		grid.add(metrics, 1, 1);
 		grid.add(metriCB, 1, 2);
 	}
@@ -75,8 +70,8 @@ public class GUI extends Application{
 	 * */
 	private void logicOperator() {
 		String logicOp[] = { "AND", "OR" };
-		lOperator = new Label("Logic Operator");
-		cb1 = new ComboBox(FXCollections.observableArrayList(logicOp));
+		Label lOperator = new Label("Logic Operator");
+		ComboBox cb1 = new ComboBox(FXCollections.observableArrayList(logicOp));
 		grid.add(lOperator, 1, 4);
 		grid.add(cb1, 1, 5);
 	}
@@ -84,7 +79,7 @@ public class GUI extends Application{
 	/**
 	 * This method creates a text field
 	 * so the user can choose
-	 * the limit wanted for said metric
+	 * the limit wanted for the other metric
 	 * */
 	private void otherLimit() {
 		TextField choice = new TextField();
@@ -95,9 +90,8 @@ public class GUI extends Application{
 	}
 	
 	/**
-	 * This method creates a combo box
-	 * so the user can chose the 
-	 * metric he wants to use.
+	 * This method creates a text field
+	 * that shows the other metric.
 	 * */
 	@SuppressWarnings("unchecked")
 	private void otherMetric() {
@@ -114,10 +108,13 @@ public class GUI extends Application{
 		
 		grid.setHgap(10);
 		grid.setVgap(10);
-		
-		
-		
-		
+	
+		chooseMetrics() ;
+		chooseLimits();
+		logicOperator();
+		otherLimit();
+		otherMetric();
+				
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
