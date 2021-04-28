@@ -50,6 +50,7 @@ public class GUI extends Application{
 		ComboBox metriCB = new ComboBox(FXCollections.observableArrayList(metricList));
 		grid.add(metrics, 1, 1);
 		grid.add(metriCB, 1, 2);
+		
 	}
 	
 	/**
