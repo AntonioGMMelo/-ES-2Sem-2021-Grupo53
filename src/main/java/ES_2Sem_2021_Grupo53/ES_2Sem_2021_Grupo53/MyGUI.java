@@ -145,8 +145,8 @@ public class MyGUI extends Application {
 				
 				}
 				
-				Scene scene = new Scene(gridHelper, 300, 250);
-				primaryStage.setScene(scene);	
+				Scene scene2 = new Scene(gridHelper, 300, 250);
+				primaryStage.setScene(scene2);
 				
 			}}); 
 
