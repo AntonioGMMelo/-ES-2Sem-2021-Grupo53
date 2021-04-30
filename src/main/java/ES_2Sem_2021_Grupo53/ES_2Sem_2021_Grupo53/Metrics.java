@@ -650,7 +650,7 @@ public class Metrics {
 					
 				}
 				
-				if(row.getCell(7).getCellType() != row.getCell(2).getCellType()) {
+				if(row.getCell(10).getCellType() != row.getCell(2).getCellType()) {
 				
 					if(row.getCell(10).getBooleanCellValue() == row2.getCell(10).getBooleanCellValue() && row.getCell(10).getBooleanCellValue() == true) TP++;
 				
