@@ -65,8 +65,8 @@ public class Metrics {
 		     titles[1] = "Package";
 		     titles[2] = "Class";
 		     titles[3] = "Method";
-		     titles[4] = "NOM_Class";
 		     titles[5] = "LOC_class";
+		     titles[4] = "NOM_Class";
 		     titles[6] = "WMC_Class";
 		     titles[7] = "is_God_Class";
 		     titles[8] = "LOC_Method";
@@ -113,8 +113,8 @@ public class Metrics {
 			for(int i = 0; i < files.size(); i++) {
 				
 				//get file package
-				String[] pathHelper = Path.split("\\\\");
-				String packageName = pathHelper[pathHelper.length -1];
+				String[] pathHelper = files.get(i).getPath().split("\\\\");
+				String packageName = pathHelper[pathHelper.length -2];
 
 				//Open Class File 
 				BufferedReader file = new BufferedReader(new FileReader(files.get(i)));
@@ -135,7 +135,7 @@ public class Metrics {
 				//Inner Class Loop
 				while((line = file.readLine()) != null) {
 
-					if(!line.trim().isEmpty() && !line.contains("//") && !line.contains("package") && !line.contains("import")) { // Checks If It Is A Valid Line i.e. Is Not An Import Or Package Statement And Is Not A Comment Or Empty Line
+					if(!line.trim().isEmpty() && !line.contains("//") && !line.contains("package") && !line.contains("import") && !line.contains("/*") && !line.contains("*/") && !line.contains("*")) { // Checks If It Is A Valid Line i.e. Is Not An Import Or Package Statement And Is Not A Comment Or Empty Line
 
 						//Gets The Class Name
 						if(numberOfLinesClass == 0) {
@@ -164,7 +164,7 @@ public class Metrics {
 						//If It Is A New Method Gets Its Name Resets Method Metrics, Increments NOM_Class Metric And Total Number Of Methods Metric, Also Puts The CYCLO_Method Metric In An Array List For Further Use And Increments WMC_Method By CYCLO_Method
 						if(isMethod(line)) {
 							
-							if(!methodName.equals("")) {
+							if(!methodName.equals("") && !methodName.trim().isEmpty()) {
 								
 								//Write To File
 								Row tempRow = sheet.createRow(methodID);
@@ -232,59 +232,62 @@ public class Metrics {
 					}
 				}
 				
-				//Add Last Method
-				
-				//Write To File
-				Row tempRow = sheet.createRow(methodID);
-				
-				//Write Method ID
-				Cell cell = tempRow.createCell(0);
-		     	cell.setCellValue(methodID);
-		     	
-		     	//Write Package Name
-		     	cell = tempRow.createCell(1);
-		     	cell.setCellValue(packageName);
-		     	
-		     	//Write Class Name
-		     	cell = tempRow.createCell(2);
-		     	cell.setCellValue(className);
-		     	
-		     	//Write Method Name
-		     	cell = tempRow.createCell(3);
-		     	cell.setCellValue(methodName);
-		     	
-		     	//LOC_Method
-		     	cell = tempRow.createCell(8);
-		     	cell.setCellValue(numberOfLinesMethod);
-		     	
-		     	//CYCLO_Method
-		     	cell = tempRow.createCell(9);
-		     	cell.setCellValue(numberOfBranches);
-		     	
-		     	//Check is_Long_Method
-	     		metrics = new ArrayList<Integer>();
-	     		
-	     		for(String s : orderOfMethods) {
-	     			
-	     			switch(s){
-	     			
-	     			case "LOC_Method":
-	     				metrics.add(numberOfLinesMethod);
-	     				break;
-	     			
-	     			case "CYCLO_Method":
-	     				metrics.add(numberOfBranches);
-	     				break;
-	     				
-	     			}
-	     			
-	     		}
-		     	
-		     	//is_Long_Method
-		     	cell = tempRow.createCell(10);
-		     	cell.setCellValue(isCodeSmell(metrics, logicMethods, thresholdsMethods)); // isCodeSmell
-		    						
-				methodID++;
+				if(!methodName.equals("")) {
+					//Add Last Method
+
+					//Write To File
+					Row tempRow = sheet.createRow(methodID);
+
+					//Write Method ID
+					Cell cell = tempRow.createCell(0);
+					cell.setCellValue(methodID);
+
+					//Write Package Name
+					cell = tempRow.createCell(1);
+					cell.setCellValue(packageName);
+
+					//Write Class Name
+					cell = tempRow.createCell(2);
+					cell.setCellValue(className);
+
+					//Write Method Name
+					cell = tempRow.createCell(3);
+					cell.setCellValue(methodName);
+
+					//LOC_Method
+					cell = tempRow.createCell(8);
+					cell.setCellValue(numberOfLinesMethod);
+
+					//CYCLO_Method
+					cell = tempRow.createCell(9);
+					cell.setCellValue(numberOfBranches);
+
+					//Check is_Long_Method
+					metrics = new ArrayList<Integer>();
+
+					for(String s : orderOfMethods) {
+
+						switch(s){
+
+						case "LOC_Method":
+							metrics.add(numberOfLinesMethod);
+							break;
+
+						case "CYCLO_Method":
+							metrics.add(numberOfBranches);
+							break;
+
+						}
+
+					}
+
+					//is_Long_Method
+					cell = tempRow.createCell(10);
+					cell.setCellValue(isCodeSmell(metrics, logicMethods, thresholdsMethods)); // isCodeSmell
+
+					methodID++;
+
+				}
 				
 				//Increment Number Of Total Classes By 1 And Number Of Total Lines Of Code By LOC_Class
 				setNumberOfClasses(getNumberOfClasses() + 1);
@@ -384,11 +387,35 @@ public class Metrics {
 	public String getClassName(String line){
 
 		String[] helper = line.split(" ");
-
-		if(helper[helper.length - 1].equals("{")) {
+		
+		if(helper.length > 4 && (helper[helper.length - 2].equals("extends") || helper[helper.length - 2].equals("implements"))) {
+			
+			if(!helper[helper.length - 3].trim().isEmpty()) {
+				
+				return helper[helper.length - 3];
+			
+			}else{
+				
+				return helper[helper.length - 4];
+				
+			}
+			
+		}else if(helper.length > 4 && (helper[helper.length - 3].equals("extends") || helper[helper.length - 3].equals("implements"))) {
+			
+			if(!helper[helper.length - 4].trim().isEmpty()) {
+			
+				return helper[helper.length - 4];
+			
+			}else{
+				
+				return helper[helper.length - 5];
+				
+			}
+			
+		}else if(helper[helper.length - 1].equals("{")) {
 
 			return helper[helper.length -2];
-
+			
 		}else{
 			String s = helper[helper.length -1];
 			return s.substring(0, s.length() - 1 );
@@ -417,7 +444,7 @@ public class Metrics {
 		String[] helper = ogHelper[0].split(" ");
 
 		String answer = helper[helper.length -1];
-
+		
 		return answer.substring(0, answer.length());
 
 	}
@@ -439,13 +466,23 @@ public class Metrics {
 
 	public boolean isMethod(String line) {
 
-		if(line.indexOf("(") >= 0){
+		if(line.indexOf("(") >= 0 && !line.contains("=") && !line.contains(" class ")){
 
 			String[] help = line.split("\\(");
 			String[] helpNext = help[0].split(" ");
-			helpNext[0] = helpNext[0].trim();
-
-			if(!helpNext[0].contains("print") && (helpNext[0].equals("private") || helpNext[0].equals("public") || helpNext[0].equals("static") || helpNext[0].equals("void") || helpNext[0].contains("int") || helpNext[0].contains("String") || helpNext[0].contains("boolean") || helpNext[0].contains("char"))) {
+			
+			for(int i = 0; i < helpNext.length ; i++) {
+			
+				if(!helpNext[i].trim().isEmpty()) {
+				
+					helpNext[0] = helpNext[i].trim(); 
+					break;
+					
+				}
+		
+			}
+		
+			if(!helpNext[0].contains("print") && (helpNext[0].equals("private") || helpNext[0].equals("public") || helpNext[0].equals("static") || helpNext[0].equals("void") || helpNext[0].startsWith("int") || helpNext[0].startsWith("String") || helpNext[0].startsWith("boolean") || helpNext[0].startsWith("char") || helpNext[0].contains("List"))) {
 
 				return true;
 

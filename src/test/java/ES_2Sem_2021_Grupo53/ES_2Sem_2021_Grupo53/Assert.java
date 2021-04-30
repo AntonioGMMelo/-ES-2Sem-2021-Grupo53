@@ -15,8 +15,7 @@ public class Assert {
 	@Test
 	public void testAssertion(){
 		
-		String PATH = "C:\\Users\\Maria\\Desktop\\3ºAno\\Engenharia de Software\\Projeto\\projetO\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy";
-					//"C:\\Users\\ant\\eclipse-workspace\\ES-2Sem-2021-Grupo53\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy";
+		String PATH = ".\\bin\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy\\jasml_0.10\\src";
 	
 		//isCodeSmell
 		ArrayList<Integer> allMetricsExample = new ArrayList<Integer>();
@@ -73,8 +72,8 @@ public class Assert {
 		String result1 = new Metrics().getClassName("private static class className{");
 		String result2 = new Metrics().getClassName("private class className{");
 		String result3 = new Metrics().getClassName("private static class className {");
-		String result4 = new Metrics().getClassName("private static class extends some_class className{");
-		String result5 = new Metrics().getClassName("private static class implements some_interface className {");
+		String result4 = new Metrics().getClassName("private static class className extends some_class {");
+		String result5 = new Metrics().getClassName("private static class className implements some_interface {");
 		
 		assertEquals("className", result1);
 		assertEquals("className", result2);
