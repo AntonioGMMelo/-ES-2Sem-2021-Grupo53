@@ -6,8 +6,11 @@ import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -208,10 +211,36 @@ public class MyGUI extends Application {
 																						
 																					}
 																					
-																					TextField threshold3 = new TextField();
+																					final TextField threshold3 = new TextField();
 																					threshold3.setPromptText("Threshold3");
 																					grid.add(threshold3, 7, 2);
 																					
+																					threshold3.focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+																						@Override
+																						public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+																							
+																							if(!newValue) {
+																								
+																								TextField threshold = threshold3;
+																								
+																								try {
+
+																									int helper = Integer.parseInt(threshold.getText());
+																									classThreshold.add(helper);
+
+																								}catch(Exception e) {
+																								
+																									System.out.println("fucked it m8");
+																								
+																								}
+
+																							}
+																							
+																						}																						
+																						
+																					});
+																						
 																				}
 																				
 																			});
@@ -228,7 +257,6 @@ public class MyGUI extends Application {
 																	try {
 
 																		int helper = Integer.parseInt(threshold2.getText());
-																		System.out.println(helper);
 																		classThreshold.add(helper);
 
 																	}catch(Exception e) {
@@ -260,7 +288,6 @@ public class MyGUI extends Application {
 										try {
 
 											int helper = Integer.parseInt(threshold2.getText());
-											System.out.println(helper);
 											classThreshold.add(helper);
 
 										}catch(Exception e) {
@@ -284,6 +311,146 @@ public class MyGUI extends Application {
 					ComboBox smell2 = new ComboBox(FXCollections.observableArrayList(smells2));
 					
 					grid.add(smell2, 0, 4);
+					
+					smell2.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+						@Override
+						public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+							
+							ComboBox metricsHelper = new ComboBox(FXCollections.observableArrayList(methodsMetricHelper));
+							
+							grid.add(metricsHelper,0,5);
+							
+							metricsHelper.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+								@Override
+								public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+									
+									String[] methodsMetrics = methodsMetricHelper;
+									
+									for(int i = 0; i < methodsMetrics.length; i++) {
+								
+										if(newValue.toString().equals(methodsMetrics[i])) {
+											
+											methodOrder.add(newValue.toString());
+											methodsMetrics = remove(methodsMetrics, methodsMetrics[i]);
+											break;
+											
+										}
+										
+									}
+									
+									final String[] methodsMetrics2 = methodsMetrics;
+									final TextField threshold1 = new TextField();
+									threshold1.setPromptText("Threshold");
+									grid.add(threshold1, 1, 5);
+									
+									threshold1.focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+										@Override
+										public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+											
+											if(newValue){
+												
+												ComboBox logic = new ComboBox(FXCollections.observableArrayList(new String[]{"AND", "OR"}));
+
+												grid.add(logic, 2, 5);
+												
+												logic.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+													
+													@Override
+													public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+
+														final String[] methodsMetrics = methodsMetrics2;
+														
+														if(newValue.toString().equals("AND")) {
+
+															methodLogic.add("AND");
+
+														}else if(newValue.toString().equals("OR")) {
+
+															methodLogic.add("OR");
+
+														}
+														
+														ComboBox metric2 = new ComboBox(FXCollections.observableArrayList(methodsMetrics));
+														
+														grid.add(metric2, 3, 5);
+														
+														metric2.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+															@Override
+															public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+																
+																methodOrder.add(methodsMetrics[0]);
+																
+																final TextField threshold2 = new TextField();
+																threshold1.setPromptText("Threshold2");
+																grid.add(threshold2, 4, 5);
+																
+																threshold2.focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+																	@Override
+																	public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+																		
+																		if(!newValue) {
+																			
+																			TextField threshold = threshold2;
+																			
+																			try {
+
+																				int helper = Integer.parseInt(threshold.getText());
+																				methodThreshold.add(helper);
+
+																			}catch(Exception e) {
+																			
+																				System.out.println("fucked it m8");
+																			
+																			}
+
+																		}
+																		
+																	}
+																	
+																});
+																																
+															}
+														
+														});
+													}
+												});
+											}
+														
+											
+											if(!newValue) {
+												
+												TextField threshold2 = threshold1;
+												
+												try {
+
+													int helper = Integer.parseInt(threshold2.getText());
+													methodThreshold.add(helper);
+
+												}catch(Exception e) {
+												
+													System.out.println("fucked it m8");
+												
+												}
+
+											}
+											
+											
+										}
+										
+									});
+									
+								}
+								
+							});
+						}
+					
+					});
+					
 				
 				}else if(smell.getValue().toString().equals("is_Long_Method")) {
 				
@@ -320,6 +487,25 @@ public class MyGUI extends Application {
 					});
 
 				}
+				
+				Button test = new Button("Test Rules");
+				grid.add(test, 0, 6);
+				
+				test.setOnAction(new EventHandler<ActionEvent>() {
+					
+				    @Override 
+				    public void handle(ActionEvent e) {
+				    
+				    	System.out.println(classOrder);	
+				    	System.out.println(methodOrder);
+				    	System.out.println(classLogic);
+				    	System.out.println(methodLogic);
+				    	System.out.println(classThreshold);
+				    	System.out.println(methodThreshold);
+
+				    }
+				    
+				});
 				
 			}}); 
 			
