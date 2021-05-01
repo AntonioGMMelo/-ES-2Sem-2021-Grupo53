@@ -9,13 +9,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -922,6 +920,7 @@ public class MyGUI extends Application {
 				    	System.out.println(numbers[2]);
 				    	System.out.println(numbers[3]);
 				    	//call new page
+				    	CalibratePopUp.display();
 				    	
 				    }
 				    
@@ -936,8 +935,7 @@ public class MyGUI extends Application {
 		return ;
 		
 	}
-
-			
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
