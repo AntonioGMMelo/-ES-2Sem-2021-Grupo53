@@ -919,8 +919,8 @@ public class MyGUI extends Application {
 				    	System.out.println(numbers[1]);
 				    	System.out.println(numbers[2]);
 				    	System.out.println(numbers[3]);
-				    	//call new page
-				    	CalibratePopUp.display();
+				    	
+				    	CalibratePopUp.display(numbers);
 				    	
 				    }
 				    
