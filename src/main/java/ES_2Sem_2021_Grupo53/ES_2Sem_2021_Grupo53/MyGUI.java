@@ -15,6 +15,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class MyGUI extends Application {
@@ -900,6 +901,10 @@ public class MyGUI extends Application {
 				Button test = new Button("Test Rules");
 				grid.add(test, 0, 6);
 				
+				final Text t1 = new Text();
+				t1.setWrappingWidth(250);
+		    	grid.add(t1, 0, 10);
+		    	
 				test.setOnAction(new EventHandler<ActionEvent>() {
 					
 				    @Override 
@@ -920,14 +925,26 @@ public class MyGUI extends Application {
 				    	System.out.println(numbers[2]);
 				    	System.out.println(numbers[3]);
 				    	
-				    	CalibratePopUp.display(numbers);
+				    	String s = CalibratePopUp.display(numbers);
+				    	
+				    	if(s.equals("MainMenu")) {
+				    		
+				    		//call main menu with the correct args
+				    		primaryStage.close();
+				    		
+				    	}
+				    	
+				    	Text t = t1;
+				    	
+				    	t.setText(s);
+				    	
 				    	
 				    }
 				    
 				});
 				
 			}}); 
-			
+		
 		Scene scene = new Scene(gridHelper, 1920, 1000);
 		primaryStage.setScene(scene);
 		primaryStage.show();

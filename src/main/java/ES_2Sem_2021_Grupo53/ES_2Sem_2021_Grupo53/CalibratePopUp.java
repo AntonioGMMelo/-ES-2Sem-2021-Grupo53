@@ -1,5 +1,7 @@
 package ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,19 +14,28 @@ import javafx.stage.Stage;
 
 public class CalibratePopUp{
 
-	public static void display(int[] Statistics) {
+	private static boolean isTrue = false;
+	
+	private static void helper() {
 		
-		Stage primaryStage = new Stage();
+		isTrue = true;
+		
+	}
+	
+	public static String display(int[] Statistics) {
+		
+		final Stage primaryStage = new Stage();
 		BorderPane pane = new BorderPane();
 		
 		double tPRate = ((double)Statistics[1]/((double)Statistics[0] + (double)Statistics[1])) * 100;
 		double tFRate = ((double)Statistics[3]/((double)Statistics[2] + (double)Statistics[3])) * 100 ;
 		double correctRate = (((double)Statistics[1] + (double)Statistics[3])/((double)Statistics[0] + (double)Statistics[1] + (double)Statistics[2] + (double)Statistics[3])) * 100;
+		final String myString = "These Rules Have " + Statistics[1]  + " True positives and " + Statistics[0] + " False Positives giving us a True Positives rate of: " + 
+				tPRate + "% they also have " + Statistics[3] + " True Negatives and " + Statistics[2] + " False Negatives, which gives us a True Negative rate of: " + 
+				tFRate + "% which ultimately gives us a correct rate of:  " + correctRate + "% for these rules.";
 		
 		Text l = new Text();
-		l.setText("These Rules Have " + Statistics[1]  + " True positives and " + Statistics[0] + " False Positives giving us a True Positives rate of: " + 
-		tPRate + "% they also have " + Statistics[3] + " True Negatives and " + Statistics[2] + " False Negatives, which gives us a True Negative rate of: " + 
-		tFRate + "% which ultimately gives us a correct rate of:  " + correctRate + "% for these rules." );
+		l.setText(myString);
 		l.setWrappingWidth(250);
 		l.setTextAlignment(TextAlignment.JUSTIFY);
 		pane.setCenter(l);
@@ -33,6 +44,28 @@ public class CalibratePopUp{
 		
 		Button reCalibrate = new Button("Re-Calibrate");
 		Button save = new Button("Save");
+		
+		reCalibrate.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				
+				primaryStage.close();
+				
+			}
+			
+		});
+		
+		save.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				
+				helper();
+				primaryStage.close();
+			}
+	
+		});
 		
 		grid.getChildren().add(reCalibrate);
 		grid.getChildren().add(save);
@@ -47,6 +80,10 @@ public class CalibratePopUp{
 		Scene scene = new Scene(pane, 300, 200);
 		primaryStage.setScene(scene);
 		primaryStage.showAndWait();
+	
+		if(isTrue) return "MainMenu";
+		
+		return myString;
 		
 	}
 
