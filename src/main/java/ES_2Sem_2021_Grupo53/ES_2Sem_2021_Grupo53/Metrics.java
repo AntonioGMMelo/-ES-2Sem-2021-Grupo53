@@ -16,7 +16,6 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-//Metric Extraction File
 public class Metrics {
 
 	private int numberOfPackages = 0; //Increment every time we enter a new folder
@@ -127,7 +126,7 @@ public class Metrics {
 				int numberOfLinesClass = 0; // Increment every new line in the class
 				int numberOfMethodsClass = 0; //Increment every time we enter a new method in the class
 				int numberOfLinesMethod = 0; //Increment every new line till end of method
-				int numberOfBranches = 1; //Increment every time there is a for or while loop in the method
+				int numberOfBranches = 1; //Increment every time there is a for or while loop or an if or a case in the method
 				int numberOfBranchesClass = 0;
 				
 				ArrayList<Integer> metrics = new ArrayList<Integer>();;
@@ -373,7 +372,8 @@ public class Metrics {
 	 * Takes a Line of Code(String) and returns the class name for that line
 	 * 
 	 * Splits the string by " " and checks if the last item is "{" if it is returns the second to last item 
-	 * and if it is not returns the last item without the last char
+	 * and if it is not returns the last item without the last char except if it has an extends or implements statement
+	 * in which cases it returns the third or fourth to last String in the split String array.
 	 *  
 	 * WARNING does not check whether the line of code is a class so be careful passing lines of code to it
 	 * 
@@ -454,7 +454,7 @@ public class Metrics {
 	 * 
 	 * First it checks whether the line of code has parenthesis in it and if it does splits the string by "(" if it does not returns false
 	 * and finally takes the first item of the split string and splits it again this time by " " then it checks if the first item in this 
-	 * array is the word "private", "public" or static or if that word has a data type i. e. String, int[], ArrayList<char> etc if it does
+	 * array is the word "private", "public" or "static" or if that word has a data type i. e. String, int[], ArrayList<char> etc if it does
 	 * returns true and if it does not returns false.
 	 * 
 	 * @param line (String line of code)
