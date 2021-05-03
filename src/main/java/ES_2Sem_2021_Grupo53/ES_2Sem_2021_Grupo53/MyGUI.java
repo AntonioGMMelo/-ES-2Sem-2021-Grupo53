@@ -929,8 +929,10 @@ public class MyGUI extends Application {
 				    	
 				    	if(s.equals("MainMenu")) {
 				    		
-				    		//call main menu with the correct args
+				    		//Write rule to file
+
 				    		primaryStage.close();
+				    		MainMenu.display();
 				    		
 				    	}
 				    	
