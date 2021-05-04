@@ -89,8 +89,7 @@ public class MyGUI{
 	
 	@SuppressWarnings("unchecked")
 	public static void display(final Stage primaryStage){
-
-		primaryStage.getIcons().add(new Image(GUI.class.getResourceAsStream("icon.png")));
+		
 		primaryStage.setTitle("Code Smells");
 		
 		//First smell definition
@@ -291,7 +290,7 @@ public class MyGUI{
 
 																								}catch(Exception e) {
 																								
-																									System.out.println("fucked it m8");
+																									ErrorMessage.display("Invalid Threshold 3 for is_God_Class.");
 																								
 																								}
 
@@ -322,7 +321,7 @@ public class MyGUI{
 
 																	}catch(Exception e) {
 																	
-																		System.out.println("fucked it m8");
+																		ErrorMessage.display("Invalid Threshold 2 for is_God_Class.");
 																	
 																	}
 
@@ -354,7 +353,7 @@ public class MyGUI{
 
 										}catch(Exception e) {
 										
-											System.out.println("fucked it m8");
+											ErrorMessage.display("Invalid Threshold 1 for is_God_Class.");
 										
 										}
 
@@ -471,7 +470,7 @@ public class MyGUI{
 
 																			}catch(Exception e) {
 																			
-																				System.out.println("fucked it m8");
+																				ErrorMessage.display("Invalid Threshold 2 for is_Long_Method.");
 																			
 																			}
 
@@ -501,7 +500,7 @@ public class MyGUI{
 
 												}catch(Exception e) {
 												
-													System.out.println("fucked it m8");
+													ErrorMessage.display("Invalid Threshold 1 for is_Long_Method.");
 												
 												}
 
@@ -706,7 +705,7 @@ public class MyGUI{
 
 																											}catch(Exception e) {
 
-																												System.out.println("fucked it m8");
+																												ErrorMessage.display("Invalid Threshold 3  for is_God_Class.");
 
 																											}
 
@@ -737,7 +736,7 @@ public class MyGUI{
 
 																				}catch(Exception e) {
 
-																					System.out.println("fucked it m8");
+																					ErrorMessage.display("Invalid Threshold 2 for is_God_Class.");
 
 																				}
 
@@ -769,7 +768,7 @@ public class MyGUI{
 
 													}catch(Exception e) {
 
-														System.out.println("fucked it m8");
+														ErrorMessage.display("Invalid Threshold 1 for is_God_Class.");
 
 													}
 
@@ -880,7 +879,7 @@ public class MyGUI{
 
 																	}catch(Exception e) {
 
-																		System.out.println("fucked it m8");
+																		ErrorMessage.display("Invalid Threshold 2 for is_Long_Method.");
 
 																	}
 
@@ -910,7 +909,7 @@ public class MyGUI{
 
 										}catch(Exception e) {
 
-											System.out.println("fucked it m8");
+											ErrorMessage.display("Invalid Threshold 1 for is_Long_Method.");
 
 										}
 

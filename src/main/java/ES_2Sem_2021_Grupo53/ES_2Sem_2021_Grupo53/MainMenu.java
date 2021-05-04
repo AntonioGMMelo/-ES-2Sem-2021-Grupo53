@@ -134,13 +134,11 @@ public class MainMenu {
 			
 			}catch (FileNotFoundException e1) {
 				
-				e1.printStackTrace();
-				//error message to user
+				ErrorMessage.display("File Not Found recheck Path please.");
 		
 			} catch (IOException e1) {
 			
-				e1.printStackTrace();
-				//error message to user
+				ErrorMessage.display("File Not Found recheck Path please.");
 			}
 			
 			Iterator<Row> rowIterator = Sheet.iterator();
@@ -226,9 +224,9 @@ public class MainMenu {
 			
 				Desktop.getDesktop().open(excel);
 			
-			} catch (IOException e1) {
+			} catch (Exception e1) {
 				
-				e1.printStackTrace();
+				ErrorMessage.display("File Not Found Make sure the metrics were already extracted before trying to Import.");
 			
 			}
 			
