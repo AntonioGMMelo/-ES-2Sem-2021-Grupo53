@@ -62,9 +62,9 @@ public class Assert {
 		thresholdsClass.add(1000);
 		thresholdsClass.add(10);
 		
-		boolean answer1 = new Metrics().getMetrics(PATH, orderOfMethods, logicMethods, thresholdsMethods, orderOfClass, logicClass, thresholdsClass);
+		int[] answer1 = new Metrics().getMetrics(PATH, orderOfMethods, logicMethods, thresholdsMethods, orderOfClass, logicClass, thresholdsClass);
 
-		assertTrue(answer1);
+		assertArrayEquals(new int[] {4,42,247,5217} ,answer1);
 		
 		
 		//getClassName
@@ -109,12 +109,12 @@ public class Assert {
 		assertEquals("methodName", result14);
 		assertEquals("methodName", result15);
 		
-		File theoretical = new File("C:\\Users\\ant\\eclipse-workspace\\ES-2Sem-2021-Grupo53\\Dummy_metricsTest.xlsx");
-		File practical = new File("C:\\Users\\ant\\eclipse-workspace\\ES-2Sem-2021-Grupo53\\Dummy_metrics.xlsx");
+		File theoretical = new File(".\\Dummy_metricsTest.xlsx");
+		File practical = new File(".\\Dummy_metrics.xlsx");
 		
 		int[] result16 = new Metrics().compare(theoretical, practical);
 		
-		assertArrayEquals(new int[] {1,3,1,7}, result16);
+		assertArrayEquals(new int[] {8,4,0,0}, result16);
 		
 	}
 	

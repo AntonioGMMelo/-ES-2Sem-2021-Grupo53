@@ -932,8 +932,8 @@ public class MyGUI extends Application {
 				    		//Write rule to file
 
 				    		primaryStage.close();
-				    		MainMenu.display();
-				    		
+				    		MainMenu.display(methodOrder, methodLogic, methodThreshold, classOrder, classLogic, classThreshold);
+				    	
 				    	}
 				    	
 				    	Text t = t1;

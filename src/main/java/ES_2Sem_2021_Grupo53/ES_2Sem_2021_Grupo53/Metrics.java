@@ -42,9 +42,11 @@ public class Metrics {
 	 * @throws IllegalArgumentException in case it can't open one of the files 
 	 */
 
-	public boolean getMetrics(String Path, ArrayList<String> orderOfMethods, ArrayList<String> logicMethods, ArrayList<Integer> thresholdsMethods, ArrayList<String> orderOfClass, ArrayList<String> logicClass, ArrayList<Integer> thresholdsClass) {
+	public int[] getMetrics(String Path, ArrayList<String> orderOfMethods, ArrayList<String> logicMethods, ArrayList<Integer> thresholdsMethods, ArrayList<String> orderOfClass, ArrayList<String> logicClass, ArrayList<Integer> thresholdsClass) {
  
 		try {
+			
+			System.out.println(Path);
 			
 			//Get Name For The XLSX File
 			String[] pathHelp = Path.split("\\\\");
@@ -365,7 +367,7 @@ public class Metrics {
 			
 		}
 
-		return true;
+		return new int[] {numberOfPackages, numberOfClasses, numberOfMethods, numberOfLines};
 	}
 
 	/**
@@ -527,7 +529,7 @@ public class Metrics {
 				metricsResult.add(i, true);
 		}
 		
-		for(int j = 0; j < metricsResult.size(); j++){
+		for(int j = 0; j < metricsResult.size() && logicOp.size() > 0; j++){
 			if(j == 0){
 				result = metricsResult.get(0);
 				logicOperation = logicOp.get(0);
