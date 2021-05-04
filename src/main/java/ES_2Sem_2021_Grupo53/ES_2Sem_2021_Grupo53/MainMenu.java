@@ -1,5 +1,6 @@
 package ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,6 +12,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -71,7 +73,7 @@ public class MainMenu {
 		
 		Button Import = new Button("Import xlsx File");
 		
-		Button reCalibrate = new Button("Re-Calibrate");
+		Button reCalibrate = new Button("Close");
 		
 		Button clearLog = new Button("Clear Logs");
 		
@@ -87,7 +89,7 @@ public class MainMenu {
 		Text loc = new Text();
 		loc.setText("Lines of code: ");
 		
-		buttons.getChildren().addAll(Import, reCalibrate, clearLog, packages, classes, methods, loc);
+		buttons.getChildren().addAll(Import, clearLog, reCalibrate, packages, classes, methods, loc);
 		buttons.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		
 		//Code_Smells report area
@@ -171,14 +173,14 @@ public class MainMenu {
 				if(row.getCell(10).getBooleanCellValue() == true) {
 					
 					Text tex = new Text();
-					tex.setText( "Is_Long_Method found at MethodID = " + row.getCell(0).getNumericCellValue());
+					tex.setText( "Is_Long_Method found at MethodID = " + (int)row.getCell(0).getNumericCellValue());
 					tex.setFill(Color.RED);
 					report.getChildren().add(tex);
 					
 				}else {
 					
 					Text tex = new Text();
-					tex.setText( "No code smells found at MethodID = " + row.getCell(0).getNumericCellValue());
+					tex.setText( "No code smells found at MethodID = " + (int)row.getCell(0).getNumericCellValue());
 					tex.setFill(Color.GREEN);
 					report.getChildren().add(tex);
 					
@@ -199,6 +201,31 @@ public class MainMenu {
 			classes.setText("Classes: 0");
 			methods.setText("Methods: 0");
 			loc.setText("Lines of code: 0");
+			
+		});
+		
+		reCalibrate.setOnAction( e ->{
+			
+			primaryStage.close();
+			Platform.exit();
+			
+		});
+		
+		Import.setOnAction(e ->{
+			
+			String[] pathHelp = path.getText().split("\\\\");
+			String xlsxFileName = pathHelp[pathHelp.length -1];
+			File excel = new File(".\\"+ xlsxFileName +"_metrics.xlsx");
+			
+			try {
+			
+				Desktop.getDesktop().open(excel);
+			
+			} catch (IOException e1) {
+				
+				e1.printStackTrace();
+			
+			}
 			
 		});
 		

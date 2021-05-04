@@ -18,14 +18,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class MyGUI extends Application {
+public class MyGUI{
 
-	ArrayList<String> methodOrder = new ArrayList<String>();
-	ArrayList<String> classOrder = new ArrayList<String>();
-	ArrayList<String> methodLogic = new ArrayList<String>();
-	ArrayList<String> classLogic = new ArrayList<String>();
-	ArrayList<Integer> methodThreshold = new ArrayList<Integer>();
-	ArrayList<Integer> classThreshold = new ArrayList<Integer>();
+	static ArrayList<String> methodOrder = new ArrayList<String>();
+	static ArrayList<String> classOrder = new ArrayList<String>();
+	static ArrayList<String> methodLogic = new ArrayList<String>();
+	static ArrayList<String> classLogic = new ArrayList<String>();
+	static ArrayList<Integer> methodThreshold = new ArrayList<Integer>();
+	static ArrayList<Integer> classThreshold = new ArrayList<Integer>();
 	
 	
 	/**
@@ -37,7 +37,7 @@ public class MyGUI extends Application {
 	 * @param array, item
 	 * @return array without the item
 	 */
-	public String[] remove(String[] array, String item) {
+	public static String[] remove(String[] array, String item) {
 		
 		String [] answer = new String[array.length -1];
 		int answerIndex = 0;
@@ -63,7 +63,7 @@ public class MyGUI extends Application {
 	 * @param array, item
 	 * @return array with the item at the end
 	 */
-	public String[] add(String[] array, String item) {
+	public static String[] add(String[] array, String item) {
 		
 		String[] answer = new String[array.length +1];
 		
@@ -86,9 +86,9 @@ public class MyGUI extends Application {
 	 *  and a test rules button which calls getMetrics() and displays the CalibratePopUp.
 	 * 
 	 */
+	
 	@SuppressWarnings("unchecked")
-	@Override
-	public void start(final Stage primaryStage) throws Exception {
+	public static void display(final Stage primaryStage){
 
 		primaryStage.getIcons().add(new Image(GUI.class.getResourceAsStream("icon.png")));
 		primaryStage.setTitle("Code Smells");
@@ -978,14 +978,10 @@ public class MyGUI extends Application {
 		
 		Scene scene = new Scene(gridHelper, 1920, 1000);
 		primaryStage.setScene(scene);
-		primaryStage.show();
+		primaryStage.showAndWait();
 		
 		return ;
 		
-	}
-	
-	public static void main(String[] args) {
-		launch(args);
 	}
 		
 }
