@@ -515,44 +515,50 @@ public class Metrics {
 	
 	public boolean isCodeSmell(ArrayList<Integer> allMetrics, ArrayList<String> logicOp, ArrayList<Integer> thresholds){ 
 		ArrayList<Boolean> metricsResult = new ArrayList<Boolean>();		
-		
 		boolean result = true;
 		boolean helper = true;
 		String logicOperation = "";
 		
-		for(int i = 0; i < thresholds.size(); i++){
-			if(allMetrics.get(i) <= thresholds.get(i))
-				metricsResult.add(i, false);
-			else
-				metricsResult.add(i, true);
+		if(logicOp.isEmpty()){ // logicOp.isEmpty() && allMetrics.size() == 1 && thresholds.size() == 1
+			if(allMetrics.get(0) <= thresholds.get(0))
+				result = false;
+			return result;
 		}
-		
-		for(int j = 0; j < metricsResult.size() && logicOp.size() > 0; j++){
-			if(j == 0){
-				result = metricsResult.get(0);
-				logicOperation = logicOp.get(0);
+		else{
+			for(int i = 0; i < thresholds.size(); i++){
+				if(allMetrics.get(i) <= thresholds.get(i))
+					metricsResult.add(i, false);
+				else
+					metricsResult.add(i, true);
 			}
-			if(j == metricsResult.size() - 1){
-				helper = metricsResult.get(j);
-				if(logicOperation.equals("AND")){
-					result = result && helper;
+		
+			for(int j = 0; j < metricsResult.size() && logicOp.size() > 0; j++){
+				if(j == 0){
+					result = metricsResult.get(0);
+					logicOperation = logicOp.get(0);
+				}
+				if(j == metricsResult.size() - 1){
+					helper = metricsResult.get(j);
+					if(logicOperation.equals("AND")){
+						result = result && helper;
+					}
+					else{
+						result = result || helper;
+					}
 				}
 				else{
-					result = result || helper;
-				}
+					helper = metricsResult.get(j);
+					switch(logicOperation){
+						case "AND":
+							result = result && helper;
+							break;
+						case "OR":
+							result = result || helper;
+							break;					
+					}
+					logicOperation = logicOp.get(j);
+				}	
 			}
-			else{
-				helper = metricsResult.get(j);
-				switch(logicOperation){
-					case "AND":
-						result = result && helper;
-						break;
-					case "OR":
-						result = result || helper;
-						break;					
-				}
-				logicOperation = logicOp.get(j);
-			}		
 		}
 		
 		return result;

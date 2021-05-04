@@ -17,7 +17,7 @@ public class Assert {
 		
 		String PATH = ".\\bin\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy\\jasml_0.10\\src";
 	
-		//isCodeSmell
+		//isCodeSmell (2 or more metrics)
 		ArrayList<Integer> allMetricsExample = new ArrayList<Integer>();
 		allMetricsExample.add(10);
 		allMetricsExample.add(15);
@@ -35,6 +35,24 @@ public class Assert {
 		boolean answer2 = new Metrics().isCodeSmell(allMetricsExample, logicOpExample, thresholdsExample);
 		
 		assertFalse(answer2);
+		
+		//isCodeSmell(1 metric)
+		
+		ArrayList<Integer> allMetricsExample2 = new ArrayList<Integer>();
+		allMetricsExample2.add(50);
+//		System.out.println(allMetricsExample2);
+				
+		ArrayList<Integer> thresholdsExample2 = new ArrayList<Integer>();
+		thresholdsExample2.add(52);
+//		System.out.println(thresholdsExample2.get(0));
+				
+		ArrayList<String> logicOpExample2 = new ArrayList<String>();
+//		System.out.println(logicOpExample2.size());
+//		System.out.println(logicOpExample2.isEmpty());
+		
+		boolean answer3 = new Metrics().isCodeSmell(allMetricsExample2, logicOpExample2, thresholdsExample2);
+		
+		assertFalse(answer3);
 		
 		//For getMetrics
 		ArrayList<String> orderOfMethods = new ArrayList<String>();
@@ -62,10 +80,9 @@ public class Assert {
 		thresholdsClass.add(1000);
 		thresholdsClass.add(10);
 		
-		int[] answer1 = new Metrics().getMetrics(PATH, orderOfMethods, logicMethods, thresholdsMethods, orderOfClass, logicClass, thresholdsClass);
+		int[] answer1 = new Metrics().getMetrics(PATH, orderOfMethods, logicMethods, thresholdsMethods, orderOfClass, logicClass, thresholdsClass); 
 
-		assertArrayEquals(new int[] {4,42,247,5217} ,answer1);
-		
+		assertArrayEquals(new int[] {4,42,247,5217}, answer1);
 		
 		//getClassName
 		
