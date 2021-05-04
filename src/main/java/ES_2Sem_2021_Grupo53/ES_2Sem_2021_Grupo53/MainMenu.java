@@ -23,6 +23,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -68,6 +69,8 @@ public class MainMenu {
 		
 		pathSubmit.getChildren().addAll(path, button, Submit);
 		
+		HBox.setHgrow(path, Priority.ALWAYS);
+		
 		//Import and information area
 		VBox buttons = new VBox();
 		
@@ -78,19 +81,21 @@ public class MainMenu {
 		Button clearLog = new Button("Clear Logs");
 		
 		Text packages = new Text();
-		packages.setText("Packages: ");
+		packages.setText("Packages: 0");
 		
 		Text classes = new Text();
-		classes.setText("Classes: ");
+		classes.setText("Classes: 0");
 		
 		Text methods = new Text();
-		methods.setText("Methods: ");
+		methods.setText("Methods: 0");
 		
 		Text loc = new Text();
-		loc.setText("Lines of code: ");
+		loc.setText("Lines of code: 0");
 		
 		buttons.getChildren().addAll(Import, clearLog, reCalibrate, packages, classes, methods, loc);
 		buttons.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+		buttons.setPadding(new Insets(10,10,0,10));
+		buttons.setSpacing(10);
 		
 		//Code_Smells report area
 		VBox report = new VBox();
