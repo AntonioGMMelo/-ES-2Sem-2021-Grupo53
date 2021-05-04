@@ -29,6 +29,18 @@ import javafx.stage.Stage;
 
 public class MainMenu {
 
+	/**
+	 * Main Interface where the user can check for code smells in a given project
+	 * 
+	 * The user chooses a directory then presses submit which calls getMetrics() with the path to that directory
+	 * and the parameters that are given to the function (WHich represent the Rules for code smell evaluation) when 
+	 * getMetrics is done presents the user with general information about the project and a full code smells report.
+	 * 
+	 * The user can also clear the logs from a previous search.
+	 * 
+	 * @param orderOfMethods, logicMethods, thresholdsMethods, orderOfClass, logicClass, thresholdsClass
+	 */
+	
 	public static void display(ArrayList<String> orderOfMethods, ArrayList<String> logicMethods, ArrayList<Integer> thresholdsMethods, ArrayList<String> orderOfClass, ArrayList<String> logicClass, ArrayList<Integer> thresholdsClass) {
 	
 		final Stage primaryStage = new Stage();
@@ -61,6 +73,8 @@ public class MainMenu {
 		
 		Button reCalibrate = new Button("Re-Calibrate");
 		
+		Button clearLog = new Button("Clear Logs");
+		
 		Text packages = new Text();
 		packages.setText("Packages: ");
 		
@@ -73,7 +87,7 @@ public class MainMenu {
 		Text loc = new Text();
 		loc.setText("Lines of code: ");
 		
-		buttons.getChildren().addAll(Import, reCalibrate, packages, classes, methods, loc);
+		buttons.getChildren().addAll(Import, reCalibrate, clearLog, packages, classes, methods, loc);
 		buttons.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		
 		//Code_Smells report area
@@ -175,6 +189,16 @@ public class MainMenu {
 			Text tex = new Text();
 			tex.setText("========================================DONE===============================================");
 			report.getChildren().add(tex);
+			
+		});
+		
+		clearLog.setOnAction(e ->{
+			
+			report.getChildren().clear();
+			packages.setText("Packages: 0");
+			classes.setText("Classes: 0");
+			methods.setText("Methods: 0");
+			loc.setText("Lines of code: 0");
 			
 		});
 		

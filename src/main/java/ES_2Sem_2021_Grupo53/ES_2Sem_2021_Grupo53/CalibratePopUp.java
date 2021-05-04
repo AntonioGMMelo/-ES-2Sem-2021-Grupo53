@@ -21,7 +21,17 @@ public class CalibratePopUp{
 		isTrue = true;
 		
 	}
-	
+	/**
+	 * This method receives an array of integers and creates statistics form them
+	 * 
+	 * It receives an array with 4 integers False Positives, True Positives, False Negatives and True Negatives and
+	 * uses them to display the correct statistics for the rule set defined by the user,
+	 * from there the user can either save these rules and go to the main menu or
+	 * go back to the rule definition to re-calibrate the rule.
+	 * 
+	 * @param Statistics
+	 * @return a string to be displayed where it was called
+	 */
 	public static String display(int[] Statistics) {
 		
 		final Stage primaryStage = new Stage();

@@ -27,6 +27,16 @@ public class MyGUI extends Application {
 	ArrayList<Integer> methodThreshold = new ArrayList<Integer>();
 	ArrayList<Integer> classThreshold = new ArrayList<Integer>();
 	
+	
+	/**
+	 * Simple method to remove an item from an array
+	 * 
+	 * Goes trough the array copying it to an array with 1 less length copies every position
+	 * except for the one where the element in that position is equal to the item.
+	 * 
+	 * @param array, item
+	 * @return array without the item
+	 */
 	public String[] remove(String[] array, String item) {
 		
 		String [] answer = new String[array.length -1];
@@ -44,6 +54,15 @@ public class MyGUI extends Application {
 		
 	}
 	
+	/**
+	 * Simple helper method to add something to the end of an array
+	 * 
+	 * Copies the array to another array that has 1 more length and adds the item to the last
+	 * position.
+	 * 
+	 * @param array, item
+	 * @return array with the item at the end
+	 */
 	public String[] add(String[] array, String item) {
 		
 		String[] answer = new String[array.length +1];
@@ -56,7 +75,17 @@ public class MyGUI extends Application {
 		
 	}
 	
-	
+	/**
+	 * This method shows the rule creation page of the interface
+	 * 
+	 * Shows the first combo box and after the user selects one of the code smells
+	 * show another combo box with the metrics that can be used for that code smell after one of the metrics is selected displays
+	 * a text field to add a threshold after the text field is selected displays a combo box with the logic operators AND and OR, if one
+	 * is selected show another combo box with the remaining metrics and it goes on like this until there are no more metrics to build the rule with,
+	 * a combo box with the other code smell and follows the same path previously described (metrics-> text field-> logic...)
+	 *  and a test rules button which calls getMetrics() and displays the CalibratePopUp.
+	 * 
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void start(final Stage primaryStage) throws Exception {
