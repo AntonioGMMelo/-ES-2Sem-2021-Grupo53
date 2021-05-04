@@ -938,21 +938,9 @@ public class MyGUI{
 					
 				    @Override 
 				    public void handle(ActionEvent e) {
-				    
-				    	System.out.println(classOrder);	
-				    	System.out.println(methodOrder);
-				    	System.out.println(classLogic);
-				    	System.out.println(methodLogic);
-				    	System.out.println(classThreshold);
-				    	System.out.println(methodThreshold);
 
 				    	new Metrics().getMetrics(".\\bin\\src\\main\\java\\ES_2Sem_2021_Grupo53\\ES_2Sem_2021_Grupo53\\Dummy\\jasml_0.10\\src", methodOrder, methodLogic, methodThreshold, classOrder, classLogic, classThreshold);
 				    	int[] numbers = new Metrics().compare(new File(".\\Code_Smells.xlsx"), new File(".\\src_metrics.xlsx"));
-				    
-				    	System.out.println(numbers[0]);
-				    	System.out.println(numbers[1]);
-				    	System.out.println(numbers[2]);
-				    	System.out.println(numbers[3]);
 				    	
 				    	String s = CalibratePopUp.display(numbers);
 				    	

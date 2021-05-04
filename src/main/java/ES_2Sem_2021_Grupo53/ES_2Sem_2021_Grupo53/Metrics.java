@@ -46,8 +46,6 @@ public class Metrics {
  
 		try {
 			
-			System.out.println(Path);
-			
 			//Get Name For The XLSX File
 			String[] pathHelp = Path.split("\\\\");
 			String xlsxFileName = pathHelp[pathHelp.length -1];
