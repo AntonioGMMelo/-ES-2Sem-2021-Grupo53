@@ -36,7 +36,8 @@ public class ErrorMessage {
 		pane.setCenter(t);
 		pane.setBottom(ok);
 		
-		Scene scene = new Scene(pane, 300, 200);
+		primaryStage.setResizable(false);
+		Scene scene = new Scene(pane, 500, 300);
 		primaryStage.setScene(scene);
 		primaryStage.showAndWait();
 		
