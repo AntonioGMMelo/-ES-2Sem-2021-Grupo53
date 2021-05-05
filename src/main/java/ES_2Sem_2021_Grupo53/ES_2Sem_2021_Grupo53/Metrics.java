@@ -6,8 +6,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
@@ -129,7 +133,7 @@ public class Metrics {
 				int numberOfBranches = 1; //Increment every time there is a for or while loop or an if or a case in the method
 				int numberOfBranchesClass = 0;
 				
-				ArrayList<Integer> metrics = new ArrayList<Integer>();;
+				ArrayList<Integer> metrics = new ArrayList<Integer>();
 
 				//Inner Class Loop
 				while((line = file.readLine()) != null) {
@@ -355,8 +359,12 @@ public class Metrics {
 	            FileOutputStream out = new FileOutputStream(new File(xlsxFileName + "_metrics.xlsx"));
 	            workbook.write(out);
 	            out.close();
+	            
+	            
 
 			}
+			
+			writeOnMetricsFile(orderOfMethods, logicMethods, thresholdsMethods, orderOfClass, logicClass, thresholdsClass);
 
 		}catch(Exception e){
 
@@ -447,6 +455,66 @@ public class Metrics {
 		
 		return answer.substring(0, answer.length());
 
+	}
+	
+	/**
+	 * A method that creates a .txt file to store the data in.
+	 *
+	 * @param none
+	 * 
+	 * @return none
+	 * 
+	 * @throws Error while creating the file
+	 */
+	
+	public void createMetricsFile(){
+		try{
+			File allMetricsFile = new File("allMetricsFile.txt");
+			if(allMetricsFile.createNewFile()){
+				System.out.println("File created: " + allMetricsFile.getName() + ".");
+			}
+			else{
+				System.out.println("File already exists.");
+			}
+		}
+		catch(IOException e){
+			System.out.println("An error ocurred on creating the file.");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * A method that writes/stores the data in the file created for that purpose
+	 * 
+	 * First, opens a writer to the file and then loops on every ArrayList and stores the information in the file.
+	 *
+	 * @param All the ArrayLists containing information from getMetrics function
+	 * 
+	 * @return none
+	 * 
+	 * @throws Error writing in the file
+	 */
+	
+	public void writeOnMetricsFile(ArrayList<String> orderOfMethods, ArrayList<String> logicMethods, ArrayList<Integer> thresholdsMethods, ArrayList<String> orderOfClass, ArrayList<String> logicClass, ArrayList<Integer> thresholdsClass){
+		createMetricsFile();
+		
+		try{
+			FileWriter firstWriter = new FileWriter("allMetricsFile.txt", true);
+			
+			firstWriter.write(orderOfMethods.toString() + ";");
+			firstWriter.write(logicMethods.toString() + ";");
+			firstWriter.write(thresholdsMethods.toString() + ";");
+			firstWriter.write(orderOfClass.toString() + ";");
+			firstWriter.write(logicClass.toString() + ";");
+			firstWriter.write(thresholdsClass.toString() + ";\r\n");
+			firstWriter.close();
+			
+			System.out.println("Successfully wrote on allMetricsFile.txt");
+		}
+		catch(IOException e){
+			System.out.println("An error ocurred on writing on the file.");
+			e.printStackTrace();
+		}
 	}
 
 	/**
