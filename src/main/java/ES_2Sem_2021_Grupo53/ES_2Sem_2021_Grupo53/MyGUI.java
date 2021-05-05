@@ -2,6 +2,7 @@ package ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -97,6 +98,7 @@ public class MyGUI{
 		
 		String[] smells = new String[] {"is_God_Class", "is_Long_Method"};
 		final ComboBox smell = new ComboBox(FXCollections.observableArrayList(smells));
+		smell.setPromptText("Choose a Code Smell");
 		
 		gridHelper.add(smell, 0, 0);
 		
@@ -105,10 +107,12 @@ public class MyGUI{
 		final String[] smellsHelper = smells;
 		
 		smell.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-
+			
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-			
+				
+				smell.setFocusTraversable(true);
+				
 				final String[] classMetricsHelper2 = classMetricsHelper;
 				final GridPane grid = gridHelper;
 				
@@ -120,6 +124,8 @@ public class MyGUI{
 					
 					final ComboBox metricsHelper = new ComboBox(FXCollections.observableArrayList(classMetricsHelper2));
 				
+					metricsHelper.setPromptText("Choose a Metric");
+					
 					grid.add(metricsHelper, 0, 2);
 				
 					metricsHelper.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -171,6 +177,8 @@ public class MyGUI{
 										
 										ComboBox logic = new ComboBox(FXCollections.observableArrayList(new String[]{"AND", "OR"}));
 
+										logic.setPromptText("Choose a Logic operator if you'd like");
+										
 										grid.add(logic, 2, 2);
 										
 										logic.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -195,6 +203,8 @@ public class MyGUI{
 												}
 												
 												ComboBox metric2 = new ComboBox(FXCollections.observableArrayList(classMetrics));
+												
+												metric2.setPromptText("Choose a Second Metric");
 												
 												grid.add(metric2, 3, 2);
 												
@@ -231,6 +241,8 @@ public class MyGUI{
 																	
 																	ComboBox logic = new ComboBox(FXCollections.observableArrayList(new String[]{"AND", "OR"}));
 
+																	logic.setPromptText("Choose a Logic operator if you'd like");
+																	
 																	grid.add(logic, 5, 2);
 																	
 																	logic.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -253,6 +265,8 @@ public class MyGUI{
 																			}
 																			
 																			ComboBox metric3 = new ComboBox(FXCollections.observableArrayList(classMetrics));
+																			
+																			metric3.setPromptText("Choose the last Metric");
 																			
 																			grid.add(metric3, 6, 2);
 													
@@ -371,6 +385,8 @@ public class MyGUI{
 					
 					ComboBox smell2 = new ComboBox(FXCollections.observableArrayList(smells2));
 					
+					smell2.setPromptText("Choose Last Code Smell");
+					
 					grid.add(smell2, 0, 4);
 					
 					smell2.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -379,6 +395,8 @@ public class MyGUI{
 						public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 							
 							ComboBox metricsHelper = new ComboBox(FXCollections.observableArrayList(methodsMetricHelper));
+							
+							metricsHelper.setPromptText("Choose a Metric");
 							
 							grid.add(metricsHelper,0,5);
 							
@@ -416,6 +434,8 @@ public class MyGUI{
 												
 												ComboBox logic = new ComboBox(FXCollections.observableArrayList(new String[]{"AND", "OR"}));
 
+												logic.setPromptText("Choose a logic operator if you'd like");
+												
 												grid.add(logic, 2, 5);
 												
 												logic.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -438,6 +458,8 @@ public class MyGUI{
 														}
 														
 														ComboBox metric2 = new ComboBox(FXCollections.observableArrayList(methodsMetrics));
+														
+														metric2.setPromptText("Choose Last Metric");
 														
 														grid.add(metric2, 3, 5);
 														
@@ -526,6 +548,8 @@ public class MyGUI{
 
 					ComboBox smell2 = new ComboBox(FXCollections.observableArrayList(smells2));
 
+					smell2.setPromptText("Choose the last Smell");
+					
 					grid.add(smell2, 0, 3);
 
 					smell2.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -544,6 +568,8 @@ public class MyGUI{
 
 								final ComboBox metricsHelper = new ComboBox(FXCollections.observableArrayList(classMetricsHelper2));
 
+								metricsHelper.setPromptText("Choose a Metric");
+								
 								grid.add(metricsHelper, 0, 4);
 
 								metricsHelper.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -588,6 +614,8 @@ public class MyGUI{
 
 													ComboBox logic = new ComboBox(FXCollections.observableArrayList(new String[]{"AND", "OR"}));
 
+													logic.setPromptText("Choose a Logic operator if you'd like");
+													
 													grid.add(logic, 2, 4);
 
 													logic.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -611,6 +639,8 @@ public class MyGUI{
 
 															ComboBox metric2 = new ComboBox(FXCollections.observableArrayList(classMetrics));
 
+															metric2.setPromptText("Choose the second metric");
+															
 															grid.add(metric2, 3, 4);
 
 															metric2.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -646,6 +676,8 @@ public class MyGUI{
 
 																				ComboBox logic = new ComboBox(FXCollections.observableArrayList(new String[]{"AND", "OR"}));
 
+																				logic.setPromptText("Choose a Logic operator if you'd like");
+																				
 																				grid.add(logic, 5, 4);
 
 																				logic.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -668,7 +700,9 @@ public class MyGUI{
 																						}
 
 																						ComboBox metric3 = new ComboBox(FXCollections.observableArrayList(classMetrics));
-
+																						
+																						metric3.setPromptText("Choose Last Metric");
+																						
 																						grid.add(metric3, 6, 4);
 
 																						metric3.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -789,6 +823,8 @@ public class MyGUI{
 
 					ComboBox metricsHelper = new ComboBox(FXCollections.observableArrayList(methodsMetricHelper));
 
+					metricsHelper.setPromptText("Choose a metric");
+					
 					grid.add(metricsHelper,0,1);
 
 					metricsHelper.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -825,6 +861,8 @@ public class MyGUI{
 
 										ComboBox logic = new ComboBox(FXCollections.observableArrayList(new String[]{"AND", "OR"}));
 
+										logic.setPromptText("Choose a Logic operator if you'd like");
+										
 										grid.add(logic, 2, 1);
 
 										logic.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -848,6 +886,8 @@ public class MyGUI{
 
 												ComboBox metric2 = new ComboBox(FXCollections.observableArrayList(methodsMetrics));
 
+												metric2.setPromptText("Choose the last metric");
+												
 												grid.add(metric2, 3, 1);
 
 												metric2.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -944,10 +984,9 @@ public class MyGUI{
 				    	String s = CalibratePopUp.display(numbers);
 				    	
 				    	if(s.equals("MainMenu")) {
-				    		
-				    		//Write rule to file
 
 				    		primaryStage.close();
+				    		new Metrics().writeOnMetricsFile(methodOrder, methodLogic, methodThreshold, classOrder, classLogic, classThreshold);
 				    		MainMenu.display(methodOrder, methodLogic, methodThreshold, classOrder, classLogic, classThreshold);
 				    	
 				    	}
@@ -961,7 +1000,87 @@ public class MyGUI{
 				    
 				});
 				
-			}}); 
+				
+			}});
+		
+		try {
+			
+			File f = new File("allMetricsFile.txt");
+			
+			String [] demzTheRules = new String[0];	
+		
+			Scanner myReader = new Scanner(f);
+			 
+			 while (myReader.hasNextLine()) {
+				 
+		        String line = myReader.nextLine();			 			 
+				demzTheRules = add(demzTheRules, line);
+	
+		    }
+			 
+		    myReader.close();
+			
+			ComboBox rules = new ComboBox(FXCollections.observableArrayList(demzTheRules));
+			
+			rules.setPromptText("Choose Old Rule");
+			
+			gridHelper.add(rules, 0, 11);
+			
+			rules.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					if(!newValue.equals("")) {
+						Button submit2 = new Button("Use Old Rule");
+						gridHelper.add(submit2, 0, 12);
+
+						submit2.setOnAction( e-> {
+
+							String[] arrays = rules.getValue().toString().split(";");
+
+							methodOrder = new ArrayList<String>();
+							methodLogic = new ArrayList<String>();
+							methodThreshold = new ArrayList<Integer>();
+							classOrder = new ArrayList<String>();
+							classLogic = new ArrayList<String>();
+							classThreshold = new ArrayList<Integer>();
+
+							String[] methodOrderFromFile = arrays[0].split(",");
+							String[] methodLogicFromFile = arrays[1].split(",");
+							String[] methodThresholdsFromFile = arrays[2].split(",");
+							String[] classOrderFromFile = arrays[3].split(",");
+							String[] classLogicFromFile = arrays[4].split(",");
+							String[] classThresholdsFromFile = arrays[5].split(",");
+
+
+							for(int i = 0; i < methodOrderFromFile.length; i++) methodOrder.add(methodOrderFromFile[i].replace("[", "").replace("]", ""));
+
+							if(methodLogicFromFile.length > 0) methodLogic.add(methodLogicFromFile[0]);
+
+							for(int i = 0; i < methodThresholdsFromFile.length; i++) methodThreshold.add(Integer.parseInt(methodThresholdsFromFile[i].replace("[", "").replace("]", "")));
+
+							for(int i = 0; i < classOrderFromFile.length; i++) classOrder.add(classOrderFromFile[i].replace("[", "").replace("]", ""));
+
+							for(int i = 0; i < classLogicFromFile.length; i++) classLogic.add(classLogicFromFile[i].replace("[", "").replace("]", ""));
+
+							for(int i = 0; i < classThresholdsFromFile.length; i++) classThreshold.add(Integer.parseInt(classThresholdsFromFile[i].replace("[", "").replace("]", "").trim()));
+
+							primaryStage.close();
+							MainMenu.display(methodOrder, methodLogic, methodThreshold, classOrder, classLogic, classThreshold);
+
+						});
+					
+				}
+
+			}
+		
+		});
+			
+		}catch(Exception e){
+		
+			ErrorMessage.display("No saved Rules at present.");
+			
+		}
 		
 		Scene scene = new Scene(gridHelper, 1920, 1000);
 		primaryStage.setScene(scene);
