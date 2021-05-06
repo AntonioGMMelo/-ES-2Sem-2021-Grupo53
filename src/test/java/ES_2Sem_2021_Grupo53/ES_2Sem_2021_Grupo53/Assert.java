@@ -114,20 +114,20 @@ public class Assert {
 		
 		//getMethodName
 		
-//		String result13 = new Metrics().getMethodName("private static void methodName() {");
-//		String result14 = new Metrics().getMethodName("private int methodName(int a, int b){");
-//		String result15 = new Metrics().getMethodName("public String methodName(int c) {");
-//		
-//		assertEquals("methodName", result13);
-//		assertEquals("methodName", result14);
-//		assertEquals("methodName", result15);
-//		
-//		File theoretical = new File(".\\Dummy_metricsTest.xlsx");
-//		File practical = new File(".\\Dummy_metrics.xlsx");
-//		
-//		int[] result16 = new Metrics().compare(theoretical, practical);
-//		
-//		assertArrayEquals(new int[] {8,4,0,0}, result16);
+		String result13 = new Metrics().getMethodName("private static void methodName() {");
+		String result14 = new Metrics().getMethodName("private int methodName(int a, int b){");
+		String result15 = new Metrics().getMethodName("public String methodName(int c) {");
+		
+		assertEquals("methodName", result13);
+		assertEquals("methodName", result14);
+		assertEquals("methodName", result15);
+		
+		File theoretical = new File(".\\Dummy_metricsTest.xlsx");
+		File practical = new File(".\\Dummy_metrics.xlsx");
+		
+		int[] result16 = new Metrics().compare(theoretical, practical);
+		
+		assertArrayEquals(new int[] {8,4,0,0}, result16);
 		
 	}
 	
