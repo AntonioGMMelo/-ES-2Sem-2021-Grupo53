@@ -78,7 +78,7 @@ public class Assert {
 		
 		int[] answer1 = new Metrics().getMetrics(PATH, orderOfMethods, logicMethods, thresholdsMethods, orderOfClass, logicClass, thresholdsClass); 
 
-		assertArrayEquals(new int[] {4,42,247,5217}, answer1);
+		assertArrayEquals(new int[] {4,42,247,5216}, answer1);
 		
 		//getClassName
 		
@@ -118,16 +118,16 @@ public class Assert {
 		String result14 = new Metrics().getMethodName("private int methodName(int a, int b){");
 		String result15 = new Metrics().getMethodName("public String methodName(int c) {");
 		
-		assertEquals("methodName", result13);
-		assertEquals("methodName", result14);
-		assertEquals("methodName", result15);
+		assertEquals("methodName()", result13);
+		assertEquals("methodName(int a, int b)", result14);
+		assertEquals("methodName(int c)", result15);
 		
 		File theoretical = new File(".\\Dummy_metricsTest.xlsx");
 		File practical = new File(".\\Dummy_metrics.xlsx");
 		
 		int[] result16 = new Metrics().compare(theoretical, practical);
 		
-		assertArrayEquals(new int[] {8,4,0,0}, result16);
+		assertArrayEquals(new int[] {6,4,1,1}, result16);
 		
 	}
 	
