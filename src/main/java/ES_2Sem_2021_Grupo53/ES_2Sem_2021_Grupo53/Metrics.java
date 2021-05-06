@@ -734,6 +734,8 @@ public class Metrics {
 				
 					else if(!row.getCell(10).getBooleanCellValue() == row2.getCell(10).getBooleanCellValue() && row2.getCell(10).getBooleanCellValue() == false) FN++;
 				
+					else continue;
+					
 				}
 				
 			}

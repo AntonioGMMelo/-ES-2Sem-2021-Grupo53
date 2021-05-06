@@ -56,11 +56,11 @@ public class Assert {
 		orderOfMethods.add("CYCLO_Method");
 		
 		ArrayList<String> logicMethods = new ArrayList<String>();
-		logicMethods.add("AND");
+		logicMethods.add("OR");
 		
 		ArrayList<Integer> thresholdsMethods= new ArrayList<Integer>();
-		thresholdsMethods.add(4);
-		thresholdsMethods.add(2);
+		thresholdsMethods.add(40);
+		thresholdsMethods.add(15);
 		
 		ArrayList<String> orderOfClass = new ArrayList<String>();
 		orderOfClass.add("WMC_Class");
@@ -68,13 +68,13 @@ public class Assert {
 		orderOfClass.add("LOC_Class");
 		
 		ArrayList<String> logicClass = new ArrayList<String>();
-		logicClass.add("OR");
+		logicClass.add("AND");
 		logicClass.add("OR");
 		
 		ArrayList<Integer> thresholdsClass = new ArrayList<Integer>();
-		thresholdsClass.add(10000);
-		thresholdsClass.add(1000);
-		thresholdsClass.add(10);
+		thresholdsClass.add(100);
+		thresholdsClass.add(4);
+		thresholdsClass.add(25);
 		
 		int[] answer1 = new Metrics().getMetrics(PATH, orderOfMethods, logicMethods, thresholdsMethods, orderOfClass, logicClass, thresholdsClass); 
 
