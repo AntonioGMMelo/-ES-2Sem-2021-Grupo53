@@ -1057,7 +1057,7 @@ public class MyGUI{
 
 							if(methodLogicFromFile.length > 0) methodLogic.add(methodLogicFromFile[0]);
 
-							for(int i = 0; i < methodThresholdsFromFile.length; i++) methodThreshold.add(Integer.parseInt(methodThresholdsFromFile[i].replace("[", "").replace("]", "")));
+							for(int i = 0; i < methodThresholdsFromFile.length; i++) methodThreshold.add(Integer.parseInt(methodThresholdsFromFile[i].replace("[", "").replace("]", "").trim()));
 
 							for(int i = 0; i < classOrderFromFile.length; i++) classOrder.add(classOrderFromFile[i].replace("[", "").replace("]", ""));
 
@@ -1082,7 +1082,7 @@ public class MyGUI{
 			
 		}
 		
-		Scene scene = new Scene(gridHelper, 1920, 1000);
+		Scene scene = new Scene(gridHelper, 1000, 500);
 		primaryStage.setScene(scene);
 		primaryStage.showAndWait();
 		
