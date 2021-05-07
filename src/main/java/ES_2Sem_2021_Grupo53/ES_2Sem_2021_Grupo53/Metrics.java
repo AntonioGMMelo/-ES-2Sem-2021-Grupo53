@@ -449,12 +449,12 @@ public class Metrics {
 	public String getMethodName(String line){
 
 		String[] ogHelper = line.split("\\(");
+		String[] helper2 = ogHelper[1].split("\\)");
 		String[] helper = ogHelper[0].split(" ");
 
 		String answer = helper[helper.length -1];
 		
-		return answer.substring(0, answer.length());
-
+		return answer + "(" + helper2[0] + ")";
 	}
 	
 	/**
@@ -734,6 +734,8 @@ public class Metrics {
 				
 					else if(!row.getCell(10).getBooleanCellValue() == row2.getCell(10).getBooleanCellValue() && row2.getCell(10).getBooleanCellValue() == false) FN++;
 				
+					else continue;
+					
 				}
 				
 			}

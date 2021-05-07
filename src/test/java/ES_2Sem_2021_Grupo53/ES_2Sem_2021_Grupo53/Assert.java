@@ -56,11 +56,11 @@ public class Assert {
 		orderOfMethods.add("CYCLO_Method");
 		
 		ArrayList<String> logicMethods = new ArrayList<String>();
-		logicMethods.add("AND");
+		logicMethods.add("OR");
 		
 		ArrayList<Integer> thresholdsMethods= new ArrayList<Integer>();
-		thresholdsMethods.add(4);
-		thresholdsMethods.add(2);
+		thresholdsMethods.add(40);
+		thresholdsMethods.add(15);
 		
 		ArrayList<String> orderOfClass = new ArrayList<String>();
 		orderOfClass.add("WMC_Class");
@@ -68,17 +68,17 @@ public class Assert {
 		orderOfClass.add("LOC_Class");
 		
 		ArrayList<String> logicClass = new ArrayList<String>();
-		logicClass.add("OR");
+		logicClass.add("AND");
 		logicClass.add("OR");
 		
 		ArrayList<Integer> thresholdsClass = new ArrayList<Integer>();
-		thresholdsClass.add(10000);
-		thresholdsClass.add(1000);
-		thresholdsClass.add(10);
+		thresholdsClass.add(100);
+		thresholdsClass.add(4);
+		thresholdsClass.add(25);
 		
 		int[] answer1 = new Metrics().getMetrics(PATH, orderOfMethods, logicMethods, thresholdsMethods, orderOfClass, logicClass, thresholdsClass); 
 
-		assertArrayEquals(new int[] {4,42,247,5217}, answer1);
+		assertArrayEquals(new int[] {4,42,247,5216}, answer1);
 		
 		//getClassName
 		
@@ -114,20 +114,20 @@ public class Assert {
 		
 		//getMethodName
 		
-//		String result13 = new Metrics().getMethodName("private static void methodName() {");
-//		String result14 = new Metrics().getMethodName("private int methodName(int a, int b){");
-//		String result15 = new Metrics().getMethodName("public String methodName(int c) {");
-//		
-//		assertEquals("methodName", result13);
-//		assertEquals("methodName", result14);
-//		assertEquals("methodName", result15);
-//		
-//		File theoretical = new File(".\\Dummy_metricsTest.xlsx");
-//		File practical = new File(".\\Dummy_metrics.xlsx");
-//		
-//		int[] result16 = new Metrics().compare(theoretical, practical);
-//		
-//		assertArrayEquals(new int[] {8,4,0,0}, result16);
+		String result13 = new Metrics().getMethodName("private static void methodName() {");
+		String result14 = new Metrics().getMethodName("private int methodName(int a, int b){");
+		String result15 = new Metrics().getMethodName("public String methodName(int c) {");
+		
+		assertEquals("methodName()", result13);
+		assertEquals("methodName(int a, int b)", result14);
+		assertEquals("methodName(int c)", result15);
+		
+		File theoretical = new File(".\\Dummy_metricsTest.xlsx");
+		File practical = new File(".\\Dummy_metrics.xlsx");
+		
+		int[] result16 = new Metrics().compare(theoretical, practical);
+		
+		assertArrayEquals(new int[] {6,4,1,1}, result16);
 		
 	}
 	
