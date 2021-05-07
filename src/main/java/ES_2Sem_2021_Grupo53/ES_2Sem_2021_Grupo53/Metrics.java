@@ -468,19 +468,7 @@ public class Metrics {
 	 */
 	
 	public void createMetricsFile(){
-		try{
-			File allMetricsFile = new File("allMetricsFile.txt");
-			if(allMetricsFile.createNewFile()){
-				System.out.println("File created: " + allMetricsFile.getName() + ".");
-			}
-			else{
-				System.out.println("File already exists.");
-			}
-		}
-		catch(IOException e){
-			System.out.println("An error ocurred on creating the file.");
-			e.printStackTrace();
-		}
+		File allMetricsFile = new File("allMetricsFile.txt");
 	}
 	
 	/**
@@ -509,10 +497,8 @@ public class Metrics {
 			firstWriter.write(thresholdsClass.toString() + ";\r\n");
 			firstWriter.close();
 			
-			System.out.println("Successfully wrote on allMetricsFile.txt");
 		}
 		catch(IOException e){
-			System.out.println("An error ocurred on writing on the file.");
 			e.printStackTrace();
 		}
 	}
