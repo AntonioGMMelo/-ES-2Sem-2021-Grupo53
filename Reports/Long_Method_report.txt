@@ -1,0 +1,25 @@
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public int[] getMetrics(java.lang.String, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>) 	titles	B1	0/12
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public boolean isMethod(java.lang.String) 	helpNext	B2	0/6
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public boolean isMethod(java.lang.String) 	helpNext	B3	0/4
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.MyGUI	public static void display(javafx.stage.Stage) 	rules	B2	0/5
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.MyGUI	public static void display(javafx.stage.Stage) 	demzTheRules	B2	0/4
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.ErrorMessage	public static void display(java.lang.String) 	t	B1	0/3
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public int[] getMetrics(java.lang.String, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>) 	className	B8	1/3
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public int[] getMetrics(java.lang.String, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>) 	className	B9	0/2
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public boolean isCodeSmell(ArrayList<java.lang.Integer>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>) 	helper	B12	1/3
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.CalibratePopUp	public static java.lang.String display(int[]) 	l	B1	4/8
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public int[] getMetrics(java.lang.String, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>) 	numberOfMethodsClass	B6	5/7
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public int[] getMetrics(java.lang.String, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>) 	numberOfMethodsClass	B8	2/3
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public int[] getMetrics(java.lang.String, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>) 	numberOfMethodsClass	B15	1/2
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public int[] getMetrics(java.lang.String, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>) 	numberOfBranchesClass	B6	9/11
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public int[] getMetrics(java.lang.String, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>) 	numberOfBranchesClass	B8	4/5
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public int[] getMetrics(java.lang.String, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>) 	numberOfBranchesClass	B13	3/4
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public int[] getMetrics(java.lang.String, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>, ArrayList<java.lang.String>, ArrayList<java.lang.String>, ArrayList<java.lang.Integer>) 	numberOfBranchesClass	B15	1/2
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public int[] compare(java.io.File, java.io.File) 	TP	B2	12/14
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public int[] compare(java.io.File, java.io.File) 	TP	B3	6/8
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public int[] compare(java.io.File, java.io.File) 	FN	B2	14/17
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public int[] compare(java.io.File, java.io.File) 	FN	B3	11/14
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public int[] compare(java.io.File, java.io.File) 	TN	B2	13/15
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public int[] compare(java.io.File, java.io.File) 	TN	B3	8/10
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public int[] compare(java.io.File, java.io.File) 	FP	B2	14/16
+ES_2Sem_2021_Grupo53.ES_2Sem_2021_Grupo53.Metrics	public int[] compare(java.io.File, java.io.File) 	FP	B3	10/12
